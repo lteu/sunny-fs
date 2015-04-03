@@ -5,16 +5,45 @@ import json
 FEATURE_FILE = 'data/feature_values.arff'
 #INPUT_FILES = ['feature_values.arff', 'algorithm_runs.arff']
 
+dataMode = False
 newlines = []
 with open(FEATURE_FILE) as ff:
     for line in ff:
-      newlines.append(line)
+      if dataMode == False:
+        if 'STRING' not in line:
+          newlines.append(line)
+        if '@DATA' in line:
+          dataMode = True
+      else:
+        splitted = line.split(",")
+        count = len(splitted)
+        subarr = splitted[1:count]
+        tmp = ','.join(subarr)
+        newlines.append(tmp)
+        #print len(subarr)
+        #tmp = ""
+        # for (idx, item) in enumerate(splitted):
+        #   if idx != 0:
+        #     tmp += 
+        #   print i, item
+      
+        # newlines.append(line)
+
       #print "Hello, ", line , "\n"
 
-for idx, val in enumerate(newlines):
-    #print idx, val
-    print "Hello, index:",idx," line:", line , "\n"
+with open('data/myfile.txt', 'w+') as outfile:
+  for idx, val in enumerate(newlines):
+    out = val
+    outfile.write(out)
 
+# outfile = open('myfile.dat', 'w+')
+# for idx, val in enumerate(newlines):
+#     f.write(...)
+#     #print idx, val
+#     if '@ATTRIBUTE' in line:
+#       pass
+#     print "Hello, index:",idx," line:", line , "\n"
+# outfile.close()
 
 # # No. of repetitions.
 # REPS = 1
