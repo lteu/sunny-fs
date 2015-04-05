@@ -61,6 +61,7 @@ numberOfInstances = 0
 with open(DIRECTORIES_FILE) as ff:
 
   for directory in ff:
+    directory = directory.rstrip()
     rootDir = "../"+directory
     PROPERTY_FILE = rootDir + "/property.json"
     PROPERTY_FILE_STATIC = rootDir + "/property_static.json"

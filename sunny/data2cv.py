@@ -5,7 +5,7 @@ import json
 
 
 
-def data2cv(numberOfInstances,rootDir): 
+def data2cv(numberOfInstances,numberOfAlgorithms,rootDir): 
   CV_FILE = rootDir+'/cv.arff'
   INPUT_FILES = ['feature_values.arff', 'algorithm_runs.arff']
   # No. of repetitions.
@@ -13,7 +13,7 @@ def data2cv(numberOfInstances,rootDir):
   # No. of folds.
   FOLDS = 10
   # No. of algorithms.
-  ALGORITHMS = 18
+  ALGORITHMS = numberOfAlgorithms
   # No. of instances.
   INSTANCES = numberOfInstances
 
@@ -98,9 +98,11 @@ numberOfInstances = 0
 with open(DIRECTORIES_FILE) as ff:
 
   for directory in ff:
+    directory = directory.rstrip()
     rootDir = "../"+directory
     #print rootDir
     PROPERTY_FILE = rootDir + "/property.json"
+    PROPERTY_FILE_STATIC = rootDir + "/property_static.json"
     #print PROPERTY_FILE
 
     with open(PROPERTY_FILE) as data_file:    
@@ -108,5 +110,9 @@ with open(DIRECTORIES_FILE) as ff:
       numberOfAttributes = int(dic['attributesNumber'])
       numberOfInstances = int(dic['instancesNumber'])
 
-    data2cv(numberOfInstances,rootDir)
+    with open(PROPERTY_FILE_STATIC) as data_file:    
+      dic = json.load(data_file)
+      numberOfAlgorithms = len(dic['PORTFOLIO'])
+
+    data2cv(numberOfInstances,numberOfAlgorithms,rootDir)
 

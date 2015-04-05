@@ -4,52 +4,6 @@ from math import sqrt
 from combinations import *
 
 
-DIRECTORIES_FILE = '../directories.txt'
-rootDir = ''
-numberOfInstances = 0
-with open(DIRECTORIES_FILE) as ff:
-
-  for directory in ff:
-    rootDir = "../"+directory
-    PROPERTY_FILE = rootDir + "/property.json"
-    PROPERTY_FILE_STATIC = rootDir + "/property_static.json"
-
-    with open(PROPERTY_FILE) as data_file:    
-      dic = json.load(data_file)
-      numberOfAttributes = int(dic['attributesNumber'])
-      numberOfInstances = int(dic['instancesNumber'])
-
-    with open(PROPERTY_FILE_STATIC) as data_file:    
-      dic = json.load(data_file)
-      scenario = dic['SCENARIO']
-      timeout = dic['timeout']
-      portfolio = dic['PORTFOLIO']
-
-
-# Name of the scenario.
-SCENARIO = scenario
-# No. of repetitions.
-REPS = 1
-# No. of folds.
-FOLDS = 10
-# Solving timeout (seconds).
-TIMEOUT = timeout
-# Default value for missing features.
-DEF_FEAT_VALUE = -1
-# Lower bound for feature scaling.
-LB = -1
-# Upper bound for feature scaling.
-UB =  1
-
-# Algorithms of the portfolio.
-PORTFOLIO = portfolio
-# Backup solver.
-BACKUP = None
-# No. of instances.
-INSTANCES = numberOfInstances
-# Neighborhood size.
-K = int(round(sqrt(INSTANCES * (FOLDS - 1) / FOLDS)))
-
 def normalize(feat_vector, lims):
   norm_vector = []
   i = 0
@@ -91,7 +45,7 @@ def get_neighbours(feat_vector, kb):
         solved[s][0] += 1
         solved[s][1] += float(it['time'])
       else:
-	solved[s][1] += TIMEOUT
+        solved[s][1] += TIMEOUT
     d = euclidean_distance(feat_vector, map(float, row[1][1 : -1].split(',')))
     distances.append((d, inst))
     infos[inst] = row[2]
@@ -181,34 +135,90 @@ def get_schedule(neighbours, timeout):
   assert sum(t for (s, t) in sorted_schedule) - timeout < 0.001
   return sorted_schedule
 
-path_feature_cost = rootDir + '/feature_costs.arff'
-reader = csv.reader(open(path_feature_cost), delimiter = ',')
-for row in reader:
-  if row and row[0].strip().upper() == '@DATA':
-    # Iterates until preamble ends.
-    break
-feature_cost = {}
-for row in reader:
-  feature_cost[row[0]] = sum(float(f) for f in row[2:] if f != '?')
-with open('feature_cost', 'w') as outfile:
-  json.dump(feature_cost, outfile)
-  
-for i in range(1, REPS + 1):
-  for j in range(1, FOLDS + 1):
-    path = rootDir+'/cv/rep_' + str(i) + '_fold_' + str(j) + '/'
-    reader = csv.reader(
-      open(path + 'test_feature_values.arff' , 'r'), delimiter = ','
-    )
-    writer = csv.writer(open(path + 'predictions.csv', 'w'), delimiter = ',')
-    with open(path + 'kb_' + SCENARIO + '/' + SCENARIO + '_lims') as infile:
-      lims = json.load(infile)
+
+
+
+# Main
+
+DIRECTORIES_FILE = '../directories.txt'
+rootDir = ''
+numberOfInstances = 0
+with open(DIRECTORIES_FILE) as ff:
+
+  for directory in ff:
+    directory = directory.rstrip()
+    rootDir = "../"+directory
+    PROPERTY_FILE = rootDir + "/property.json"
+    PROPERTY_FILE_STATIC = rootDir + "/property_static.json"
+
+    with open(PROPERTY_FILE) as data_file:    
+      dic = json.load(data_file)
+      numberOfAttributes = int(dic['attributesNumber'])
+      numberOfInstances = int(dic['instancesNumber'])
+
+    with open(PROPERTY_FILE_STATIC) as data_file:    
+      dic = json.load(data_file)
+      scenario = dic['SCENARIO']
+      timeout = dic['timeout']
+      portfolio = dic['PORTFOLIO']
+
+
+    # Name of the scenario.
+    SCENARIO = scenario
+    # No. of repetitions.
+    REPS = 1
+    # No. of folds.
+    FOLDS = 10
+    # Solving timeout (seconds).
+    TIMEOUT = timeout
+    # Default value for missing features.
+    DEF_FEAT_VALUE = -1
+    # Lower bound for feature scaling.
+    LB = -1
+    # Upper bound for feature scaling.
+    UB =  1
+
+    # Algorithms of the portfolio.
+    PORTFOLIO = portfolio
+    # Backup solver.
+    BACKUP = None
+    # No. of instances.
+    INSTANCES = numberOfInstances
+    # Neighborhood size.
+    K = int(round(sqrt(INSTANCES * (FOLDS - 1) / FOLDS)))
+
+
+
+    path_feature_cost = rootDir + '/feature_costs.arff'
+    reader = csv.reader(open(path_feature_cost), delimiter = ',')
     for row in reader:
-      inst = row[0]
-      feats = normalize(row[2:], lims)
-      kb = path + 'kb_' + SCENARIO + '/' + SCENARIO + '_infos'
-      neighbours = get_neighbours(feats, kb)
-      if TIMEOUT > feature_cost[inst]: 
-        schedule = get_schedule(neighbours, TIMEOUT - feature_cost[inst])
-      else:
-	schedule = []
-      writer.writerow([inst, i, j, schedule])
+      if row and row[0].strip().upper() == '@DATA':
+        # Iterates until preamble ends.
+        break
+    feature_cost = {}
+    for row in reader:
+      feature_cost[row[0]] = sum(float(f) for f in row[2:] if f != '?')
+
+    path_fcp = rootDir + '/feature_cost_process_generated'
+    with open(path_fcp, 'w') as outfile:
+      json.dump(feature_cost, outfile)
+      
+    for i in range(1, REPS + 1):
+      for j in range(1, FOLDS + 1):
+        path = rootDir+'/cv/rep_' + str(i) + '_fold_' + str(j) + '/'
+        reader = csv.reader(
+          open(path + 'test_feature_values.arff' , 'r'), delimiter = ','
+        )
+        writer = csv.writer(open(path + 'predictions.csv', 'w'), delimiter = ',')
+        with open(path + 'kb_' + SCENARIO + '/' + SCENARIO + '_lims') as infile:
+          lims = json.load(infile)
+        for row in reader:
+          inst = row[0]
+          feats = normalize(row[2:], lims)
+          kb = path + 'kb_' + SCENARIO + '/' + SCENARIO + '_infos'
+          neighbours = get_neighbours(feats, kb)
+          if TIMEOUT > feature_cost[inst]: 
+            schedule = get_schedule(neighbours, TIMEOUT - feature_cost[inst])
+          else:
+    	      schedule = []
+          writer.writerow([inst, i, j, schedule])
