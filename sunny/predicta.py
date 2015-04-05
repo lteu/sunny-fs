@@ -3,50 +3,51 @@ import json
 from math import sqrt
 from combinations import *
 
-
-DIRECTORIES_FILE = '../directories.txt'
-rootDir = ''
-numberOfInstances = 0
-with open(DIRECTORIES_FILE) as ff:
-
-  for directory in ff:
-    rootDir = "../"+directory
-    PROPERTY_FILE = rootDir + "/property.json"
-    PROPERTY_FILE_STATIC = rootDir + "/property_static.json"
-
-    with open(PROPERTY_FILE) as data_file:    
-      dic = json.load(data_file)
-      numberOfAttributes = int(dic['attributesNumber'])
-      numberOfInstances = int(dic['instancesNumber'])
-
-    with open(PROPERTY_FILE_STATIC) as data_file:    
-      dic = json.load(data_file)
-      scenario = dic['SCENARIO']
-      timeout = dic['timeout']
-      portfolio = dic['PORTFOLIO']
-
-
 # Name of the scenario.
-SCENARIO = scenario
+SCENARIO = 'PROTEUS-2014'
 # No. of repetitions.
 REPS = 1
 # No. of folds.
 FOLDS = 10
-# Solving timeout (seconds).
-TIMEOUT = timeout
 # Default value for missing features.
 DEF_FEAT_VALUE = -1
+# Solving timeout (seconds)
+TIMEOUT = 3600
+# No. of features.
+FEATURES = 198
 # Lower bound for feature scaling.
 LB = -1
 # Upper bound for feature scaling.
 UB =  1
-
-# Algorithms of the portfolio.
-PORTFOLIO = portfolio
-# Backup solver.
+# No. of algorithms.
+ALGORITHMS = 22
+# Default value for missing features.
+DEF_FEAT_VALUE = -1
+PORTFOLIO = ['abscon', 
+'choco', 
+'claspcnf_direct',
+'claspcnf_directorder',
+'claspcnf_support',
+'cryptominisat_direct',
+'cryptominisat_directorder',
+'cryptominisat_support',
+'gecode',
+'glucose_direct',
+'glucose_directorder',
+'glucose_support',
+'lingeling_direct',
+'lingeling_directorder',
+'lingeling_support',
+'minisat22_direct',
+'minisat22_directorder',
+'minisat22_support',
+'mistral_nj',
+'riss3g_direct',
+'riss3g_directorder',
+'riss3g_support',
+]
 BACKUP = None
-# No. of instances.
-INSTANCES = numberOfInstances
+INSTANCES = 4021
 # Neighborhood size.
 K = int(round(sqrt(INSTANCES * (FOLDS - 1) / FOLDS)))
 
@@ -181,8 +182,7 @@ def get_schedule(neighbours, timeout):
   assert sum(t for (s, t) in sorted_schedule) - timeout < 0.001
   return sorted_schedule
 
-path_feature_cost = rootDir + '/feature_costs.arff'
-reader = csv.reader(open(path_feature_cost), delimiter = ',')
+reader = csv.reader(open('aslib_data/feature_costs.arff'), delimiter = ',')
 for row in reader:
   if row and row[0].strip().upper() == '@DATA':
     # Iterates until preamble ends.
@@ -195,7 +195,7 @@ with open('feature_cost', 'w') as outfile:
   
 for i in range(1, REPS + 1):
   for j in range(1, FOLDS + 1):
-    path = rootDir+'/cv/rep_' + str(i) + '_fold_' + str(j) + '/'
+    path = 'cv/rep_' + str(i) + '_fold_' + str(j) + '/'
     reader = csv.reader(
       open(path + 'test_feature_values.arff' , 'r'), delimiter = ','
     )

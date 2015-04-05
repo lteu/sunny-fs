@@ -1,48 +1,28 @@
+
 import csv
 import json
 
-DIRECTORIES_FILE = '../directories.txt'
-rootDir = ''
-numberOfInstances = 0
-with open(DIRECTORIES_FILE) as ff:
-
-  for directory in ff:
-    rootDir = "../"+directory
-    PROPERTY_FILE = rootDir + "/property.json"
-    PROPERTY_FILE_STATIC = rootDir + "/property_static.json"
-
-    with open(PROPERTY_FILE) as data_file:    
-      dic = json.load(data_file)
-      numberOfAttributes = int(dic['attributesNumber'])
-      numberOfInstances = int(dic['instancesNumber'])
-
-    with open(PROPERTY_FILE_STATIC) as data_file:    
-      dic = json.load(data_file)
-      scenario = dic['SCENARIO']
-      timeout = dic['timeout']
-      portfolio = dic['PORTFOLIO']
-      sbs = dic['sbs']
-
-
 # Name of the scenario.
-SCENARIO = scenario
+SCENARIO = 'PROTEUS-2014'
 # No. of repetitions.
 REPS = 1
 # No. of folds.
 FOLDS = 10
-# Solving timeout (seconds).
-TIMEOUT = timeout
+# Solving timeout (seconds)
+TIMEOUT = 3600
+# No. of algorithms.
+ALGORITHMS = 22
+# Single best solver.
+SBS = 'choco'
 # PAR10 score.
 PAR10 = TIMEOUT * 10
-# Single Best Solver.
-SBS = sbs
 # No. of instances.
-INSTANCES = numberOfInstances
+INSTANCES = 4021
 
 runtimes = {}
 for i in range(1, REPS + 1):
   for j in range(1, FOLDS + 1):
-    path = rootDir+'/cv/rep_' + str(i) + '_fold_' + str(j) + '/'
+    path = 'cv/rep_' + str(i) + '_fold_' + str(j) + '/'
     reader = csv.reader(
       open(path + 'test_algorithm_runs.arff' , 'r'), delimiter = ','
     )
@@ -57,8 +37,7 @@ for i in range(1, REPS + 1):
       
 with open('feature_cost', 'r') as infile:
   feature_cost = json.load(infile)
-writer = csv.writer(open('sunny.csv', 'w'), delimiter = ',')
-writer.writerow(['instances', 'SUNNY'])  
+  
 vbs_time = 0.0
 vbs_solved = 0.0
 sbs_time = 0.0
@@ -69,12 +48,21 @@ sunny_solved = 0
 sunny_mcp = 0.0
 n = 0.0
 m = 0.0
+
+#no_sat_list = set([])
+#reader = csv.reader(open('PROTEUS_NO_SAT/inst_list', 'r'))
+#for row in reader:
+  #no_sat_list.add(row[0])
+writer = csv.writer(open('sunny.csv', 'w'), delimiter = ',')
+writer.writerow(['instances', 'SUNNY'])
 for i in range(1, REPS + 1):
   for j in range(1, FOLDS + 1):
-    path = rootDir+'/cv/rep_' + str(i) + '_fold_' + str(j) + '/'
+    path = 'cv/rep_' + str(i) + '_fold_' + str(j) + '/'
     reader = csv.reader(open(path + 'predictions.csv' , 'r'), delimiter = ',')
     for row in reader:
       inst = row[0]
+      #if inst not in no_sat_list:
+	#continue
       best = [
 	(runtimes[inst][s][0], s) 
 	for s in runtimes[inst].keys() 
