@@ -1,7 +1,7 @@
 import csv
 import json
 
-def cv2csv(scenario,features,rootDir):
+def cv2csv(scenario,features,timeout,rootDir):
   # Name of the scenario.
   SCENARIO = scenario
   # No. of repetitions.
@@ -11,7 +11,7 @@ def cv2csv(scenario,features,rootDir):
   # Default value for missing features.
   DEF_FEAT_VALUE = float("nan")
   # Solving timeout (seconds)
-  TIMEOUT = 5000
+  TIMEOUT = timeout
   # No. of features.
   FEATURES = features
 
@@ -73,7 +73,8 @@ with open(DIRECTORIES_FILE) as ff:
     with open(PROPERTY_FILE_STATIC) as data_file:    
       dic = json.load(data_file)
       scenario = dic['SCENARIO']
+      timeout = dic['timeout']
 
-    cv2csv(scenario,numberOfAttributes,rootDir)
+    cv2csv(scenario,numberOfAttributes,timeout,rootDir)
 
       

@@ -1,4 +1,4 @@
-@RELATION 'FEATURE_VALUES-SAT11-INDU-weka.filters.supervised.attribute.AttributeSelection-Eweka.attributeSelection.CfsSubsetEval -M-Sweka.attributeSelection.BestFirst -D 1 -N 5-weka.filters.supervised.attribute.AttributeSelection-Eweka.attributeSelection.CfsSubsetEval -M-Sweka.attributeSelection.BestFirst -D 1 -N 5'
+@RELATION 'FEATURE_VALUES-SAT11-INDU-weka.filters.supervised.attribute.AttributeSelection-Eweka.attributeSelection.CfsSubsetEval -M-Sweka.attributeSelection.BestFirst -D 1 -N 5'
 
 @ATTRIBUTE instance_id STRING
 @ATTRIBUTE repetition NUMERIC

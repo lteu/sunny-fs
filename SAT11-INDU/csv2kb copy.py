@@ -3,34 +3,14 @@ import csv
 import json
 from math import sqrt, isnan
 
-DIRECTORIES_FILE = '../directories.txt'
-rootDir = ''
-numberOfInstances = 0
-with open(DIRECTORIES_FILE) as ff:
-
-  for directory in ff:
-    rootDir = "../"+directory
-    PROPERTY_FILE = rootDir + "/property.json"
-    PROPERTY_FILE_STATIC = rootDir + "/property_static.json"
-
-    with open(PROPERTY_FILE) as data_file:    
-      dic = json.load(data_file)
-      numberOfAttributes = int(dic['attributesNumber'])
-      numberOfInstances = int(dic['instancesNumber'])
-
-    with open(PROPERTY_FILE_STATIC) as data_file:    
-      dic = json.load(data_file)
-      scenario = dic['SCENARIO']
-      timeout = dic['timeout']
-
 # Name of the scenario.
-SCENARIO = scenario
+SCENARIO = 'SAT11-INDU'
 # No. of repetitions.
 REPS = 1
 # No. of folds.
 FOLDS = 10
 # Solving timeout (seconds).
-TIMEOUT = timeout
+TIMEOUT = 5000
 # Lower bound for feature scaling.
 LB = -1
 # Upper bound for feature scaling.
@@ -38,11 +18,11 @@ UB =  1
 # Default value for missing features.
 DEF_FEAT_VALUE = -1
 # No. of features.
-FEATURES = numberOfAttributes
+FEATURES = 9
 
 for i in range(1, REPS + 1):
   for j in range(1, FOLDS + 1):
-    path = rootDir+'/cv/rep_' + str(i) + '_fold_' + str(j) + '/'
+    path = 'cv/rep_' + str(i) + '_fold_' + str(j) + '/'
     # Processing runtime information.
     reader = csv.reader(open(path + SCENARIO + '.info'), delimiter = '|')
     kb = {}
