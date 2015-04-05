@@ -100,20 +100,13 @@ with open(DIRECTORIES_FILE) as ff:
   for directory in ff:
     rootDir = "../"+directory
     #print rootDir
-    PROPERTY_FILE = rootDir + "/property.txt"
+    PROPERTY_FILE = rootDir + "/property.json"
     #print PROPERTY_FILE
 
-    #load instance properties
-    fcount = 0
-    with open(PROPERTY_FILE) as pf:
-      for line in pf:
-        if fcount == 0:
-          numberOfAttributes = int(line)
-        elif fcount == 1:
-          numberOfInstances = int(line)
-        fcount += 1
+    with open(PROPERTY_FILE) as data_file:    
+      dic = json.load(data_file)
+      numberOfAttributes = int(dic['attributesNumber'])
+      numberOfInstances = int(dic['instancesNumber'])
 
-
-  #print rootDir, ' ' , str(numberOfInstances),' ', str(numberOfAttributes)
-  data2cv(numberOfInstances,rootDir)
+    data2cv(numberOfInstances,rootDir)
 
