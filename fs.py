@@ -11,7 +11,6 @@ def generateFile( directory ):
   FEATURE_FILE = path+'/feature_values.arff'
   SELECT_FEATURE_FILE = path+'/new_feature_values.arff'
   PROPERTY_FILE = path+'/property.json'
-  #INPUT_FILES = ['feature_values.arff', 'algorithm_runs.arff']
 
   #filter file content
   dataMode = False
@@ -114,9 +113,12 @@ def generateFile( directory ):
     propertyArr['attributesNumber'] = len(itemAttr)
     propertyArr['instancesNumber'] = len(itemData)
     json.dump(propertyArr, outfile)
-    #outstring = str(attr)+"\n"+str(instances)
-    #outfile.write(outstring)
 
+  #remove tmp files
+  rm = "rm -rf "+TMPFILE1
+  os.system(rm)
+  rm = "rm -rf "+TMPFILE2
+  os.system(rm)
 
 ##################
 ## MAIN

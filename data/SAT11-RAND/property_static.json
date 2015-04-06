@@ -1,0 +1,12 @@
+{"sbs":"sparrow2011_sparrow2011_ubcsat1.2_2011-03-02","SCENARIO": "SAT11-RAND", "timeout": 5000,"PORTFOLIO":
+[
+  "EagleUP_1.565.350",
+  "SAT09referencesolverTNM_2009-03-22",
+  "sparrow2011_sparrow2011_ubcsat1.2_2011-03-02",
+  "adaptg2wsat2011_2011-03-02",
+  "sattime2011_2011-03-02",
+  "MPhaseSAT_M_2011-02-16",
+  "march_rw_2011-03-02",
+  "SAT09referencesolvermarch_hi_hi",
+  "SAT09referencesolvergnovelty+2_2009-03-22"
+]}

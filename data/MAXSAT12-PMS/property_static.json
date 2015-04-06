@@ -1,0 +1,9 @@
+{"sbs":"qmaxsat0.21g2comp","SCENARIO": "MAXSAT12-PMS", "timeout": 2100,"PORTFOLIO":
+[
+  "akmaxsat_ls", 
+  "akmaxsat", 
+  "DSWPM1_924", 
+  "pwbo2.1", 
+  "qmaxsat0.21comp", 
+  "qmaxsat0.21g2comp"
+]}

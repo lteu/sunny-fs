@@ -1,1 +1,21 @@
-{"SCENARIO": "SAT11-INDU", "timeout": 5000}
+{"sbs":"glucose_2","SCENARIO": "SAT11-INDU", "timeout": 5000,"PORTFOLIO":
+[
+  "RestartSAT_B95",
+  "glueminisat_2.2.5",
+  "SAT09referencesolverprecosat_236",
+  "minisathackcir_minisat_2011-05-13_simp_",
+  "minisathackreferenceminisat_2.2.0",
+  "minisathackEBMiniSAT_2011-03-02",
+  "minisathackcontrasat_2011-03-02",
+  "minisathackLR_GL_SHR_2011-03-02",
+  "minisathackMiniSAT_2.2.0-agile-26",
+  "SAT09referencesolverglucose_1.0",
+  "glucose_2",
+  "EBGlucose_1.0",
+  "Lingeling_587f_fixed_",
+  "minisathackminisat_psm_2011-04-01",
+  "CryptoMiniSat_Strange-Night2-st_fixed_",
+  "rcl_2011-04-01",
+  "MPhaseSAT64_2011-05-14_fixed_",
+  "QuteRSat_2011-05-12_fixed_"
+]}

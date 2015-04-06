@@ -1,1 +1,3 @@
-bestfit/SAT11-INDU
+data/SAT11-INDU
+data/SAT11-RAND
+data/MAXSAT12-PMS
