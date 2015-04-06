@@ -1,0 +1,15 @@
+{"sbs":"g12cpx","SCENARIO": "COP-MZN-2013", "timeout": 900,"PORTFOLIO":
+[
+  "bprolog",
+  "fzn2smt",
+  "g12cpx",
+  "g12fd",
+  "g12lazyfd",
+  "g12mip",
+  "gecode",
+  "izplus",
+  "jacop",
+  "minisatid",
+  "mistral",
+  "ortools"
+]}

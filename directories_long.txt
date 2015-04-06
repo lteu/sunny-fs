@@ -1,8 +1,13 @@
 data/SAT11-INDU working
-data/SAT11-RAND
 data/MAXSAT12-PMS working
 data/ASP-POTASSCO working
 
 
-data/MAXSAT12-PMS
-data/ASP-POTASSCO
+not working
+data/COP-MZN-2013
+data/SAT11-RAND
+data/CSP-MZN-2013
+data/PROTEUS-2014
+data/QBF-2011
+data/SAT11-HAND
+data/SAT12-INDU

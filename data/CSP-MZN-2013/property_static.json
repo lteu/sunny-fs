@@ -1,0 +1,14 @@
+{"sbs":"minisatid","SCENARIO": "CSP-MZN-2013", "timeout": 1800,"PORTFOLIO":
+[
+  "bprolog",
+  "fzn2smt",
+  "g12cpx",
+  "g12fd",
+  "g12lazyfd",
+  "g12mip",
+  "gecode",
+  "izplus",
+  "minisatid",
+  "mistral",
+  "ortools"
+]}

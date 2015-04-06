@@ -18,7 +18,7 @@ def generateFile( directory ):
   with open(FEATURE_FILE) as ff:
       for line in ff:
         if dataMode == False:
-          if 'instance_id STRING' not in line and 'repetition NUMERIC' not in line:
+          if 'instance_id STRING'.upper() not in line.upper() and 'repetition NUMERIC' not in line:
             newlines.append(line)
           if '@DATA' in line:
             dataMode = True
