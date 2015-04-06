@@ -125,6 +125,7 @@ def generateFile( directory ):
 ##################
 with open('directories.txt') as ff:
   for line in ff:
+    line = line.rstrip()
     generateFile(line)
     print line
 

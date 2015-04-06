@@ -19,6 +19,9 @@ def evaluate(scenario,timeout,numberOfInstances,rootDir):
   # No. of instances.
   INSTANCES = numberOfInstances
 
+  #result file path
+  result_path = rootDir + '/results.txt'
+
   runtimes = {}
   for i in range(1, REPS + 1):
     for j in range(1, FOLDS + 1):
@@ -125,6 +128,25 @@ def evaluate(scenario,timeout,numberOfInstances,rootDir):
   print 'VBS FSI:',vbs_solved / n
   print 'VBS MCP: 0'
   print '=========='
+
+  #write results
+  with open(result_path, 'w+') as outfile:
+    res = ('*** ' + SCENARIO + ' ***' + 
+          '\nNo. of instances: '+str(n)+
+          '\nSolvable instances: '+str(m)+
+          '\n----------'+
+          '\nSUNNY PAR10: '+ str(sunny_time / n)+
+          '\nSUNNY FSI: '+str(sunny_solved / n) +
+          '\nSUNNY MCP: '+str(sunny_mcp / n)+
+          '\n----------'+
+          '\nSBS PAR10: '+str(sbs_time / n) +
+          '\nSBS FSI: '+ str(sbs_solved / n) +
+          '\nSBS MCP: '+str(sbs_mcp / n)+
+          '\n----------'+
+          '\nVBS PAR10: '+ str(vbs_time / n)+
+          '\nVBS FSI: '+ str(vbs_solved / n) +
+          '\nVBS MCP: 0\n==========')
+    outfile.write(res)
 
 # Main
 
