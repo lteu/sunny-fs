@@ -1,0 +1,12 @@
+{"sbs":"idastar-symmulgt-transmul",
+"reps":1,
+"folds":10,
+"SCENARIO": "PREMARSHALLING-ASTAR-2013", 
+"timeout": 3600,
+"PORTFOLIO":
+[
+  "astar-symmulgt-transmul", 
+  "astar-symmullt-transmul", 
+  "idastar-symmulgt-transmul", 
+  "idastar-symmullt-transmul"
+]}

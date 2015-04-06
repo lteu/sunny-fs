@@ -9,7 +9,7 @@ def generateFile( directory ):
   TMPFILE1 = path+'/tmpfile1.arff'
   TMPFILE2 = path+'/tmpfile2.arff'
   FEATURE_FILE = path+'/feature_values.arff'
-  SELECT_FEATURE_FILE = path+'/new_feature_values.arff'
+  SELECT_FEATURE_FILE = path+'/selected_feature_values.arff'
   PROPERTY_FILE = path+'/property.json'
 
   #filter file content
@@ -18,7 +18,7 @@ def generateFile( directory ):
   with open(FEATURE_FILE) as ff:
       for line in ff:
         if dataMode == False:
-          if 'instance_id STRING'.upper() not in line.upper() and 'repetition NUMERIC' not in line:
+          if 'instance_id STRING'.upper() not in line.upper() and 'repetition NUMERIC'.upper() not in line.upper():
             newlines.append(line)
           if '@DATA' in line:
             dataMode = True

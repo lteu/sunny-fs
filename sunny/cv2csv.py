@@ -1,19 +1,19 @@
 import csv
 import json
 
-def cv2csv(scenario,features,timeout,rootDir):
+def cv2csv(scenario,numberOfAttributes,timeout,reps,folds,rootDir):
   # Name of the scenario.
   SCENARIO = scenario
   # No. of repetitions.
-  REPS = 1
+  REPS = reps
   # No. of folds.
-  FOLDS = 10
+  FOLDS = folds
   # Default value for missing features.
   DEF_FEAT_VALUE = float("nan")
   # Solving timeout (seconds)
   TIMEOUT = timeout
   # No. of features.
-  FEATURES = features
+  FEATURES = numberOfAttributes
 
   for i in range(1, REPS + 1):
     for j in range(1, FOLDS + 1):
@@ -21,7 +21,7 @@ def cv2csv(scenario,features,timeout,rootDir):
       
       # Creating ASP-POTASSCO.feat
       reader = csv.reader(
-        open(path + 'train_feature_values.arff'), delimiter = ','
+        open(path + 'train_selected_feature_values.arff'), delimiter = ','
       )
       writer = csv.writer(open(path + SCENARIO + '.feat', 'w'), delimiter = '|')
       for row in reader:
@@ -75,7 +75,9 @@ with open(DIRECTORIES_FILE) as ff:
       dic = json.load(data_file)
       scenario = dic['SCENARIO']
       timeout = dic['timeout']
+      reps = dic['reps']
+      folds = dic['folds']
 
-    cv2csv(scenario,numberOfAttributes,timeout,rootDir)
+    cv2csv(scenario,numberOfAttributes,timeout,reps,folds,rootDir)
 
       

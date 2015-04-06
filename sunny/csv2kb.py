@@ -23,13 +23,15 @@ with open(DIRECTORIES_FILE) as ff:
       dic = json.load(data_file)
       scenario = dic['SCENARIO']
       timeout = dic['timeout']
+      reps = dic['reps']
+      folds = dic['folds']
 
     # Name of the scenario.
     SCENARIO = scenario
     # No. of repetitions.
-    REPS = 1
+    REPS = reps
     # No. of folds.
-    FOLDS = 10
+    FOLDS = folds
     # Solving timeout (seconds).
     TIMEOUT = timeout
     # Lower bound for feature scaling.

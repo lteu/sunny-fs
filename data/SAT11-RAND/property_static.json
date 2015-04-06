@@ -1,4 +1,9 @@
-{"sbs":"sparrow2011_sparrow2011_ubcsat1.2_2011-03-02","SCENARIO": "SAT11-RAND", "timeout": 5000,"PORTFOLIO":
+{"sbs":"sparrow2011_sparrow2011_ubcsat1.2_2011-03-02",
+"reps":1,
+"folds":10,
+"SCENARIO": "SAT11-RAND", 
+"timeout": 5000,
+"PORTFOLIO":
 [
   "EagleUP_1.565.350",
   "SAT09referencesolverTNM_2009-03-22",

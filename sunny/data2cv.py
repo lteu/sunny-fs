@@ -5,13 +5,13 @@ import json
 
 
 
-def data2cv(numberOfInstances,numberOfAlgorithms,rootDir): 
+def data2cv(numberOfInstances,numberOfAlgorithms,reps,folds,rootDir): 
   CV_FILE = rootDir+'/cv.arff'
-  INPUT_FILES = ['feature_values.arff', 'algorithm_runs.arff']
+  INPUT_FILES = ['selected_feature_values.arff', 'algorithm_runs.arff']
   # No. of repetitions.
-  REPS = 1
+  REPS = reps
   # No. of folds.
-  FOLDS = 10
+  FOLDS = folds
   # No. of algorithms.
   ALGORITHMS = numberOfAlgorithms
   # No. of instances.
@@ -51,10 +51,12 @@ def data2cv(numberOfInstances,numberOfAlgorithms,rootDir):
       # Iterates until preamble ends.
       break
   for row in reader:
-    inst = row[0]
-    i = int(row[1])
-    j = int(row[2])
-    test_insts[i][j].add(inst)
+    #added by Liu Tong, some cv.arff files could have bad formatted lines, for example empty line, line contains %
+    if len(row) == 3:
+      inst = row[0]
+      i = int(row[1])
+      j = int(row[2])
+      test_insts[i][j].add(inst)
      
   # Creates train/test files in the corresponding folders.
   for infile in INPUT_FILES:
@@ -79,11 +81,11 @@ def data2cv(numberOfInstances,numberOfAlgorithms,rootDir):
           tr += 1
     
     # Consistency checks.
-    if infile == 'feature_values.arff':
+    if infile == 'selected_feature_values.arff':
       assert ts == INSTANCES
     else:
       assert ts == INSTANCES * ALGORITHMS
-    if infile == 'feature_values.arff':
+    if infile == 'selected_feature_values.arff':
       assert tr == (FOLDS - 1) * INSTANCES
     else:
       assert tr == (FOLDS - 1) * INSTANCES * ALGORITHMS
@@ -113,6 +115,8 @@ with open(DIRECTORIES_FILE) as ff:
     with open(PROPERTY_FILE_STATIC) as data_file:    
       dic = json.load(data_file)
       numberOfAlgorithms = len(dic['PORTFOLIO'])
+      reps = dic['reps']
+      folds = dic['folds']
 
-    data2cv(numberOfInstances,numberOfAlgorithms,rootDir)
+    data2cv(numberOfInstances,numberOfAlgorithms,reps,folds,rootDir)
 

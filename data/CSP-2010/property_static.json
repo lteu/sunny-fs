@@ -1,0 +1,7 @@
+{"sbs":"standard",
+"reps":1,
+"folds":10,
+"SCENARIO": "CSP-2010", 
+"timeout": 5000,
+"PORTFOLIO":
+["standard", "learning"]}

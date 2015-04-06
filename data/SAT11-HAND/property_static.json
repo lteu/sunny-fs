@@ -1,18 +1,25 @@
-{"sbs":"SAT09referencesolverclasp_1.2.0-SAT09-32","SCENARIO": "SAT11-HAND", "timeout": 5000,"PORTFOLIO":
-[
-  "MPhaseSAT_2011-02-15",
-  "Sol_2011-04-04",
-  "QuteRSat_2011-05-12_fixed_",
-  "CryptoMiniSat_Strange-Night2-st_fixed_",
-  "PicoSAT_941",
-  "glucose_2",
-  "clasp_2.0-R4092-crafted",
-  "SAT07referencesolverminisat_SAT2007",
-  "jMiniSat_2011",
-  "RestartSAT_B95",
-  "SAT09referencesolverclasp_1.2.0-SAT09-32",
-  "sathys_2011-04-01",
-  "SApperloT2010_2011-05-15_fixed_",
-  "sattime+_2011-03-02",
-  "sattime_2011-03-02",
-]}
+{
+  "sbs":"SAT09referencesolverclasp_1.2.0-SAT09-32",
+  "reps":1,
+  "folds":10,
+  "SCENARIO": "SAT11-HAND", 
+  "timeout": 5000,
+  "PORTFOLIO":
+  [
+    "MPhaseSAT_2011-02-15",
+    "Sol_2011-04-04",
+    "QuteRSat_2011-05-12_fixed_",
+    "CryptoMiniSat_Strange-Night2-st_fixed_",
+    "PicoSAT_941",
+    "glucose_2",
+    "clasp_2.0-R4092-crafted",
+    "SAT07referencesolverminisat_SAT2007",
+    "jMiniSat_2011",
+    "RestartSAT_B95",
+    "SAT09referencesolverclasp_1.2.0-SAT09-32",
+    "sathys_2011-04-01",
+    "SApperloT2010_2011-05-15_fixed_",
+    "sattime+_2011-03-02",
+    "sattime_2011-03-02"
+  ]
+}

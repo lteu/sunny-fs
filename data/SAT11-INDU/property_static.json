@@ -1,4 +1,8 @@
-{"sbs":"glucose_2","SCENARIO": "SAT11-INDU", "timeout": 5000,"PORTFOLIO":
+{"sbs":"glucose_2",
+"reps":1,
+"folds":10,
+"SCENARIO": "SAT11-INDU", 
+"timeout": 5000,"PORTFOLIO":
 [
   "RestartSAT_B95",
   "glueminisat_2.2.5",

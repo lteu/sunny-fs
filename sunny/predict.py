@@ -1,3 +1,4 @@
+import os
 import csv
 import json
 from math import sqrt
@@ -161,14 +162,17 @@ with open(DIRECTORIES_FILE) as ff:
       scenario = dic['SCENARIO']
       timeout = dic['timeout']
       portfolio = dic['PORTFOLIO']
+      reps = dic['reps']
+      folds = dic['folds']
+
 
 
     # Name of the scenario.
     SCENARIO = scenario
     # No. of repetitions.
-    REPS = 1
+    REPS = reps
     # No. of folds.
-    FOLDS = 10
+    FOLDS = folds
     # Solving timeout (seconds).
     TIMEOUT = timeout
     # Default value for missing features.
@@ -187,27 +191,30 @@ with open(DIRECTORIES_FILE) as ff:
     # Neighborhood size.
     K = int(round(sqrt(INSTANCES * (FOLDS - 1) / FOLDS)))
 
-
-
+    #added by Tong
+    FEAT_COST = -1
     path_feature_cost = rootDir + '/feature_costs.arff'
-    reader = csv.reader(open(path_feature_cost), delimiter = ',')
-    for row in reader:
-      if row and row[0].strip().upper() == '@DATA':
-        # Iterates until preamble ends.
-        break
-    feature_cost = {}
-    for row in reader:
-      feature_cost[row[0]] = sum(float(f) for f in row[2:] if f != '?')
+    #added by Tong, check feature cost file
+    if not os.path.exists(path_feature_cost):
+      FEAT_COST = 0
+    else:
+      reader = csv.reader(open(path_feature_cost), delimiter = ',')
+      for row in reader:
+        if row and row[0].strip().upper() == '@DATA':
+          # Iterates until preamble ends.
+          break
+      feature_cost = {}
+      for row in reader:
+        feature_cost[row[0]] = sum(float(f) for f in row[2:] if f != '?')
+      path_fcp = rootDir + '/feature_cost_process_generated'
+      with open(path_fcp, 'w') as outfile:
+        json.dump(feature_cost, outfile)
 
-    path_fcp = rootDir + '/feature_cost_process_generated'
-    with open(path_fcp, 'w') as outfile:
-      json.dump(feature_cost, outfile)
-      
     for i in range(1, REPS + 1):
       for j in range(1, FOLDS + 1):
         path = rootDir+'/cv/rep_' + str(i) + '_fold_' + str(j) + '/'
         reader = csv.reader(
-          open(path + 'test_feature_values.arff' , 'r'), delimiter = ','
+          open(path + 'test_selected_feature_values.arff' , 'r'), delimiter = ','
         )
         writer = csv.writer(open(path + 'predictions.csv', 'w'), delimiter = ',')
         with open(path + 'kb_' + SCENARIO + '/' + SCENARIO + '_lims') as infile:
@@ -217,8 +224,12 @@ with open(DIRECTORIES_FILE) as ff:
           feats = normalize(row[2:], lims)
           kb = path + 'kb_' + SCENARIO + '/' + SCENARIO + '_infos'
           neighbours = get_neighbours(feats, kb)
-          if TIMEOUT > feature_cost[inst]: 
+
+          # added by Tong
+          if FEAT_COST == -1 and TIMEOUT > feature_cost[inst]: 
             schedule = get_schedule(neighbours, TIMEOUT - feature_cost[inst])
+          elif FEAT_COST == 0 and  TIMEOUT > FEAT_COST:
+            schedule = get_schedule(neighbours, TIMEOUT - FEAT_COST)
           else:
     	      schedule = []
           writer.writerow([inst, i, j, schedule])

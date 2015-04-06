@@ -1,4 +1,9 @@
-{"sbs":"minisatid","SCENARIO": "CSP-MZN-2013", "timeout": 1800,"PORTFOLIO":
+{"sbs":"minisatid",
+"reps":1,
+"folds":10,
+"SCENARIO": "CSP-MZN-2013", 
+"timeout": 1800,
+"PORTFOLIO":
 [
   "bprolog",
   "fzn2smt",

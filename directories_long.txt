@@ -1,13 +1,20 @@
-data/SAT11-INDU working
-data/MAXSAT12-PMS working
-data/ASP-POTASSCO working
-
-
-not working
+tested:
 data/COP-MZN-2013
 data/SAT11-RAND
 data/CSP-MZN-2013
-data/PROTEUS-2014
-data/QBF-2011
 data/SAT11-HAND
-data/SAT12-INDU
+data/MAXSAT12-PMS
+data/ASP-POTASSCO
+data/PREMARSHALLING-ASTAR-2013
+data/CSP-2010
+
+data/QBF-2011 //no feature cost
+data/SAT12-INDU //at least 30 min
+data/PROTEUS-2014 //cannot stop in 1 hour
+data/SAT12-HAND //cannot stop in 1 hour
+data/SAT12-ALL //cannot stop in 1 hour
+data/SAT12-RAND //supposed to finish after 1 hour ...
+
+need to test:
+
+

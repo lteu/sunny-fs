@@ -1,4 +1,9 @@
-{"sbs":"choco","SCENARIO": "PROTEUS-2014", "timeout": 3600,"PORTFOLIO":
+{"sbs":"choco",
+"reps":1,
+"folds":10,
+"SCENARIO": "PROTEUS-2014", 
+"timeout": 3600,
+"PORTFOLIO":
 ["abscon", 
 "choco", 
 "claspcnf_direct",
@@ -20,5 +25,5 @@
 "mistral_nj",
 "riss3g_direct",
 "riss3g_directorder",
-"riss3g_support",
+"riss3g_support"
 ]}

@@ -1,4 +1,11 @@
-{"sbs":"sKizzo","SCENARIO": "QBF-2011", "timeout": 3600,"PORTFOLIO":
-[
-  "2clsQ", "quantor", "QuBE", "sKizzo", "sSolve"
-]}
+{
+	"sbs":"sKizzo",
+	"reps":1,
+	"folds":10,
+	"SCENARIO": "QBF-2011", 
+	"timeout": 3600,
+	"PORTFOLIO":
+	[
+	  "2clsQ", "quantor", "QuBE", "sKizzo", "sSolve"
+	]
+}

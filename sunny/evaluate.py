@@ -1,15 +1,16 @@
+import os
 import csv
 import json
 
 
 
-def evaluate(scenario,timeout,numberOfInstances,rootDir):
+def evaluate(scenario,timeout,numberOfInstances,reps,folds,rootDir):
   # Name of the scenario.
   SCENARIO = scenario
   # No. of repetitions.
-  REPS = 1
+  REPS = reps
   # No. of folds.
-  FOLDS = 10
+  FOLDS = folds
   # Solving timeout (seconds).
   TIMEOUT = timeout
   # PAR10 score.
@@ -19,8 +20,8 @@ def evaluate(scenario,timeout,numberOfInstances,rootDir):
   # No. of instances.
   INSTANCES = numberOfInstances
 
-  #result file path
-  result_path = rootDir + '/results.txt'
+  #result file path, added by Tong
+  result_path = '../data/results/' +scenario+ '.txt'
 
   runtimes = {}
   for i in range(1, REPS + 1):
@@ -38,11 +39,18 @@ def evaluate(scenario,timeout,numberOfInstances,rootDir):
           runtimes[inst] = {}
         runtimes[inst][solv] = [time, info]
         
+  #changed by Tong
+  FEAT_COST = -1
   path_fcp = rootDir + '/feature_cost_process_generated'
-  with open(path_fcp, 'r') as infile:
-    feature_cost = json.load(infile)
-  path_sunny_process_generated = rootDir + '/sunny_process_generated.csv'
-  writer = csv.writer(open(path_sunny_process_generated, 'w'), delimiter = ',')
+  if os.path.exists(path_fcp):
+    with open(path_fcp, 'r') as infile:
+      feature_cost = json.load(infile)
+    path_sunny_process_generated = rootDir + '/sunny_process_generated.csv'
+    writer = csv.writer(open(path_sunny_process_generated, 'w'), delimiter = ',')
+  else:
+    FEAT_COST = 0
+    writer = csv.writer(open('sunny.csv', 'w'), delimiter = ',')
+
   writer.writerow(['instances', 'SUNNY'])  
   vbs_time = 0.0
   vbs_solved = 0.0
@@ -77,7 +85,10 @@ def evaluate(scenario,timeout,numberOfInstances,rootDir):
         vbs_time += min_time
         vbs_solved += 1
         schedule = eval(row[3])
-        time = feature_cost[inst]
+        if FEAT_COST == -1:
+          time = feature_cost[inst]
+        elif FEAT_COST == 0:
+          time = FEAT_COST
         solved = False
         rem_time = 0
         for (s, t) in schedule:
@@ -172,4 +183,7 @@ with open(DIRECTORIES_FILE) as ff:
       timeout = dic['timeout']
       portfolio = dic['PORTFOLIO']
       sbs = dic['sbs']
-    evaluate(scenario,timeout,numberOfInstances,rootDir)
+      reps = dic['reps']
+      folds = dic['folds']
+
+    evaluate(scenario,timeout,numberOfInstances,reps,folds,rootDir)

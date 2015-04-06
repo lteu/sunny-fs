@@ -1,4 +1,9 @@
-{"sbs":"g12cpx","SCENARIO": "COP-MZN-2013", "timeout": 900,"PORTFOLIO":
+{"sbs":"g12cpx",
+"reps":5,
+"folds":5,
+"SCENARIO": "COP-MZN-2013", 
+"timeout": 900,
+"PORTFOLIO":
 [
   "bprolog",
   "fzn2smt",
