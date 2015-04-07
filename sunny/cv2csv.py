@@ -1,5 +1,6 @@
 import csv
 import json
+import sys
 
 def cv2csv(scenario,numberOfAttributes,timeout,reps,folds,rootDir):
   # Name of the scenario.
@@ -55,29 +56,23 @@ def cv2csv(scenario,numberOfAttributes,timeout,reps,folds,rootDir):
 #------- main  ------------
 ###########################
 
-DIRECTORIES_FILE = '../directories.txt'
-rootDir = ''
+rootDir = "../data/"+ sys.argv[1]
 numberOfInstances = 0
-with open(DIRECTORIES_FILE) as ff:
+PROPERTY_FILE = rootDir + "/property.json"
+PROPERTY_FILE_STATIC = rootDir + "/property_static.json"
 
-  for directory in ff:
-    directory = directory.rstrip()
-    rootDir = "../"+directory
-    PROPERTY_FILE = rootDir + "/property.json"
-    PROPERTY_FILE_STATIC = rootDir + "/property_static.json"
+with open(PROPERTY_FILE) as data_file:    
+  dic = json.load(data_file)
+  numberOfAttributes = int(dic['attributesNumber'])
+  numberOfInstances = int(dic['instancesNumber'])
 
-    with open(PROPERTY_FILE) as data_file:    
-      dic = json.load(data_file)
-      numberOfAttributes = int(dic['attributesNumber'])
-      numberOfInstances = int(dic['instancesNumber'])
+with open(PROPERTY_FILE_STATIC) as data_file:    
+  dic = json.load(data_file)
+  scenario = dic['SCENARIO']
+  timeout = dic['timeout']
+  reps = dic['reps']
+  folds = dic['folds']
 
-    with open(PROPERTY_FILE_STATIC) as data_file:    
-      dic = json.load(data_file)
-      scenario = dic['SCENARIO']
-      timeout = dic['timeout']
-      reps = dic['reps']
-      folds = dic['folds']
-
-    cv2csv(scenario,numberOfAttributes,timeout,reps,folds,rootDir)
+cv2csv(scenario,numberOfAttributes,timeout,reps,folds,rootDir)
 
       

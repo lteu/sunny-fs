@@ -5,27 +5,31 @@ import json
 
 
 print "Run feature selection"
-command = 'python fs.py'
-os.system(command)
 
-os.chdir("sunny")
+with open('directories.txt') as ff:
+  for line in ff:
+    line = line.rstrip()
+    command = 'python fs.py ' + line
+    os.system(command)
 
-print "Run data2cv"
-command = 'python data2cv.py'
-os.system(command)
+    os.chdir("sunny")
 
-print "Run cv2csv"
-command = 'python cv2csv.py'
-os.system(command)
+    print "Run data2cv"
+    command = 'python data2cv.py ' + line
+    os.system(command)
 
-print "Run csv2kb"
-command = 'python csv2kb.py'
-os.system(command)
+    print "Run cv2csv"
+    command = 'python cv2csv.py ' + line
+    os.system(command)
 
-print "Run predict"
-command = 'python predict.py'
-os.system(command)
+    print "Run csv2kb"
+    command = 'python csv2kb.py ' + line
+    os.system(command)
 
-print "Run evaluate"
-command = 'python evaluate.py'
-os.system(command)
+    print "Run predict"
+    command = 'python predict.py ' + line
+    os.system(command)
+
+    print "Run evaluate"
+    command = 'python evaluate.py ' + line
+    os.system(command)

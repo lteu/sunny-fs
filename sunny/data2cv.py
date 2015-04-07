@@ -1,7 +1,7 @@
 import os
 import csv
 import json
-
+import sys
 
 
 
@@ -94,29 +94,28 @@ def data2cv(numberOfInstances,numberOfAlgorithms,reps,folds,rootDir):
 #------- main  ------------
 ###########################
 
-DIRECTORIES_FILE = '../directories.txt'
-rootDir = ''
+
+
+
+
+
+rootDir = "../data/"+ sys.argv[1]
 numberOfInstances = 0
-with open(DIRECTORIES_FILE) as ff:
+#print rootDir
+PROPERTY_FILE = rootDir + "/property.json"
+PROPERTY_FILE_STATIC = rootDir + "/property_static.json"
+#print PROPERTY_FILE
 
-  for directory in ff:
-    directory = directory.rstrip()
-    rootDir = "../"+directory
-    #print rootDir
-    PROPERTY_FILE = rootDir + "/property.json"
-    PROPERTY_FILE_STATIC = rootDir + "/property_static.json"
-    #print PROPERTY_FILE
+with open(PROPERTY_FILE) as data_file:    
+  dic = json.load(data_file)
+  numberOfAttributes = int(dic['attributesNumber'])
+  numberOfInstances = int(dic['instancesNumber'])
 
-    with open(PROPERTY_FILE) as data_file:    
-      dic = json.load(data_file)
-      numberOfAttributes = int(dic['attributesNumber'])
-      numberOfInstances = int(dic['instancesNumber'])
+with open(PROPERTY_FILE_STATIC) as data_file:    
+  dic = json.load(data_file)
+  numberOfAlgorithms = len(dic['PORTFOLIO'])
+  reps = dic['reps']
+  folds = dic['folds']
 
-    with open(PROPERTY_FILE_STATIC) as data_file:    
-      dic = json.load(data_file)
-      numberOfAlgorithms = len(dic['PORTFOLIO'])
-      reps = dic['reps']
-      folds = dic['folds']
-
-    data2cv(numberOfInstances,numberOfAlgorithms,reps,folds,rootDir)
+data2cv(numberOfInstances,numberOfAlgorithms,reps,folds,rootDir)
 

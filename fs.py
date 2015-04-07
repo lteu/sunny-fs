@@ -1,10 +1,12 @@
 import os
 import csv
 import json
+import sys
 
 
 def generateFile( directory ):
   "This function reads directory"
+  selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval -M" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
   path = directory
   TMPFILE1 = path+'/tmpfile1.arff'
   TMPFILE2 = path+'/tmpfile2.arff'
@@ -36,7 +38,7 @@ def generateFile( directory ):
       outfile.write(out)
 
   #feature selection
-  command = 'java -cp weka.jar weka.filters.supervised.attribute.AttributeSelection -E "weka.attributeSelection.CfsSubsetEval -M" -S "weka.attributeSelection.BestFirst -D 1 -N 5"   -i '+ TMPFILE1+ ' -o '+ TMPFILE2
+  command = 'java -cp weka.jar weka.filters.supervised.attribute.AttributeSelection '+selection_algorithm+'   -i '+ TMPFILE1+ ' -o '+ TMPFILE2
   os.system(command)
 
   newlines = []
@@ -123,11 +125,7 @@ def generateFile( directory ):
 ##################
 ## MAIN
 ##################
-with open('directories.txt') as ff:
-  for line in ff:
-    line = line.rstrip()
-    generateFile(line)
-    print line
 
 
-
+dataDir = 'data/' + sys.argv[1]
+generateFile(dataDir)

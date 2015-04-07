@@ -1,7 +1,7 @@
 import os
 import csv
 import json
-
+import sys
 
 
 def evaluate(scenario,timeout,numberOfInstances,reps,folds,rootDir):
@@ -161,29 +161,23 @@ def evaluate(scenario,timeout,numberOfInstances,reps,folds,rootDir):
 
 # Main
 
-DIRECTORIES_FILE = '../directories.txt'
-rootDir = ''
+rootDir = "../data/"+ sys.argv[1]
 numberOfInstances = 0
-with open(DIRECTORIES_FILE) as ff:
+PROPERTY_FILE = rootDir + "/property.json"
+PROPERTY_FILE_STATIC = rootDir + "/property_static.json"
 
-  for directory in ff:
-    directory = directory.rstrip()
-    rootDir = "../"+directory
-    PROPERTY_FILE = rootDir + "/property.json"
-    PROPERTY_FILE_STATIC = rootDir + "/property_static.json"
+with open(PROPERTY_FILE) as data_file:    
+  dic = json.load(data_file)
+  numberOfAttributes = int(dic['attributesNumber'])
+  numberOfInstances = int(dic['instancesNumber'])
 
-    with open(PROPERTY_FILE) as data_file:    
-      dic = json.load(data_file)
-      numberOfAttributes = int(dic['attributesNumber'])
-      numberOfInstances = int(dic['instancesNumber'])
+with open(PROPERTY_FILE_STATIC) as data_file:    
+  dic = json.load(data_file)
+  scenario = dic['SCENARIO']
+  timeout = dic['timeout']
+  portfolio = dic['PORTFOLIO']
+  sbs = dic['sbs']
+  reps = dic['reps']
+  folds = dic['folds']
 
-    with open(PROPERTY_FILE_STATIC) as data_file:    
-      dic = json.load(data_file)
-      scenario = dic['SCENARIO']
-      timeout = dic['timeout']
-      portfolio = dic['PORTFOLIO']
-      sbs = dic['sbs']
-      reps = dic['reps']
-      folds = dic['folds']
-
-    evaluate(scenario,timeout,numberOfInstances,reps,folds,rootDir)
+evaluate(scenario,timeout,numberOfInstances,reps,folds,rootDir)
