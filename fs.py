@@ -6,7 +6,7 @@ import sys
 
 def generateFile( directory ):
   "This function reads directory"
-  selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval -M" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
+  selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval -M" -S "weka.attributeSelection.BestFirst -D 1 -N 30" '
   path = directory
   TMPFILE1 = path+'/tmpfile1.arff'
   TMPFILE2 = path+'/tmpfile2.arff'

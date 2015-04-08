@@ -26,10 +26,10 @@ with open('directories.txt') as ff:
     command = 'python csv2kb.py ' + line
     os.system(command)
 
-    print "Run predict"
-    command = 'python predict.py ' + line
-    os.system(command)
+    # print "Run predict"
+    # command = 'python predict.py ' + line
+    # os.system(command)
 
-    print "Run evaluate"
-    command = 'python evaluate.py ' + line
-    os.system(command)
+    # print "Run evaluate"
+    # command = 'python evaluate.py ' + line
+    # os.system(command)
