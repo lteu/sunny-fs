@@ -7,6 +7,12 @@ import sys
 def generateFile( directory ):
   "This function reads directory"
 
+  #================= Evaluation Methods ===================
+  # cannot call: AttributeSetEvaluator, CorrelationAttributeEval, HoldOutSubsetEvaluator,  UnsupervisedAttributeEvaluator,  UnsupervisedSubsetEvaluator
+  # Need special class: GainRatioAttributeEval, InfoGainAttributeEval, OneRAttributeEval, SymmetricalUncertAttributeEval
+  # ReliefFAttributeEval only change the order of the attributes
+  # Returns only one feature, WrapperSubsetEval
+
   #================= BestFit ===================
 
   # Searches the space of attribute subsets by greedy hillclimbing augmented 
@@ -20,13 +26,19 @@ def generateFile( directory ):
   #selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval -M" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
   
   # Returns only one feature
-  #selection_algorithm = ' -E "weka.attributeSelection.WrapperSubsetEval" -S "weka.attributeSelection.BestFirst -D 1 -S 5" '
+  # selection_algorithm = ' -E "weka.attributeSelection.WrapperSubsetEval" -S "weka.attributeSelection.BestFirst -D 1 -S 5" '
 
   # not working
-  #selection_algorithm = ' -E "weka.attributeSelection.HoldOutSubsetEvaluator" -S "weka.attributeSelection.BestFirst -D 1 -S 5" '
+  
+  # selection_algorithm = ' -E "weka.attributeSelection.AttributeSetEvaluator" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
+  # selection_algorithm = ' -E "weka.attributeSelection.ReliefFAttributeEval"  '
   
   #backward search
-  #selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval -M" -S "weka.attributeSelection.BestFirst -D 0 -N 5" '
+  selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval -M" -S "weka.attributeSelection.BestFirst -D 0 -N 5" '
+
+
+  #
+  #selection_algorithm = ' -E "weka.attributeSelection.AttributeSetEvaluator" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
 
   #================= GreedyStepwise ===================
 
@@ -36,13 +48,15 @@ def generateFile( directory ):
   #   Can also produce a ranked list of attributes by traversing the space from one side to the other and \
   #   recording the order that attributes are selected."
 
-  #selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval" -S "weka.attributeSelection.GreedyStepwise -N 15" '
+  #selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval" -S "weka.attributeSelection.GreedyStepwise -N 15 -B" '
 
   #================= Ranker ===================
 
   # not working
   # ranker used evaluation methods:ReliefFAttributeEval InfoGainAttributeEval SymmetricalUncertAttributeEval
-  selection_algorithm = ' -E "weka.attributeSelection.InfoGainAttributeEval"'
+  # selection_algorithm = ' -E "weka.attributeSelection.InfoGainAttributeEval"'
+
+
 
   path = directory
   TMPFILE1 = path+'/tmpfile1.arff'
