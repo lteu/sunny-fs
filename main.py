@@ -4,11 +4,15 @@ import json
 
 
 
-print "Run feature selection"
+
 
 with open('directories.txt') as ff:
   for line in ff:
+    
     line = line.rstrip()
+
+    print "Run feature selection, scenario: ", line
+
     command = 'python fs.py ' + line
     os.system(command)
 
@@ -33,3 +37,5 @@ with open('directories.txt') as ff:
     print "Run evaluate"
     command = 'python evaluate.py ' + line
     os.system(command)
+
+    os.chdir("../")
