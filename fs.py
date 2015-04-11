@@ -6,7 +6,44 @@ import sys
 
 def generateFile( directory ):
   "This function reads directory"
-  selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval -M" -S "weka.attributeSelection.BestFirst -D 1 -N 30" '
+
+  #================= BestFit ===================
+
+  # Searches the space of attribute subsets by greedy hillclimbing augmented 
+  # with a backtracking facility. Setting the number of consecutive non-improving nodes 
+  # allowed controls the level of backtracking done. Best first may start with the empty set of 
+  # attributes and search forward, or start with the full set of attributes and search backward, 
+  # or start at any point and search in both directions (by considering all possible single attribute 
+  # additions and deletions at a given point).
+
+  # Forward search
+  #selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval -M" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
+  
+  # Returns only one feature
+  #selection_algorithm = ' -E "weka.attributeSelection.WrapperSubsetEval" -S "weka.attributeSelection.BestFirst -D 1 -S 5" '
+
+  # not working
+  #selection_algorithm = ' -E "weka.attributeSelection.HoldOutSubsetEvaluator" -S "weka.attributeSelection.BestFirst -D 1 -S 5" '
+  
+  #backward search
+  #selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval -M" -S "weka.attributeSelection.BestFirst -D 0 -N 5" '
+
+  #================= GreedyStepwise ===================
+
+  # "Performs a greedy forward or backward search through the space of attribute subsets. \
+  #   May start with no/all attributes or from an arbitrary point in the space. \
+  #   Stops when the addition/deletion of any remaining attributes results in a decrease in evaluation. \
+  #   Can also produce a ranked list of attributes by traversing the space from one side to the other and \
+  #   recording the order that attributes are selected."
+
+  #selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval" -S "weka.attributeSelection.GreedyStepwise -N 15" '
+
+  #================= Ranker ===================
+
+  # not working
+  # ranker used evaluation methods:ReliefFAttributeEval InfoGainAttributeEval SymmetricalUncertAttributeEval
+  selection_algorithm = ' -E "weka.attributeSelection.InfoGainAttributeEval"'
+
   path = directory
   TMPFILE1 = path+'/tmpfile1.arff'
   TMPFILE2 = path+'/tmpfile2.arff'
