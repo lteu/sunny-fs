@@ -17,37 +17,62 @@ def generateFile( directory ):
   SELECT_FEATURE_FILE = path+'/selected_feature_values.arff'
   PROPERTY_FILE = path+'/property.json'
 
+  PROPERTY_FILE_STATIC = path+'/property_static.json'
+  ALG_RUN_FILE = path+'/algorithm_runs.arff'
 
-  #feature selection
-  command = 'cp '+FEATURE_FILE+' '+SELECT_FEATURE_FILE
-  os.system(command)
+  #Get algorithms of this scenario
+  with open(PROPERTY_FILE_STATIC) as ff:
+    dic = json.load(ff)
+    algs = dic['PORTFOLIO']
+    algs.append('allfair')
+    algsstring = ', '.join(algs)
+    print algsstring
 
-  # load generated file contents
-  itemAttr = []
-  itemData = []
-  with open(SELECT_FEATURE_FILE) as ff:
+
+  with open(ALG_RUN_FILE) as ff:
     dataMode = False
     for line in ff:
+      line = line.rstrip()
       if dataMode == False:
-        if '@relation' in line or '@RELATION' in line:
-          splitted = line.split("'")
-        elif '@attribute' in line or '@ATTRIBUTE' in line:
-          line = line.strip()
-          itemAttr.append(line)
-        elif '@data' in line or '@DATA' in line:
+        if '@data' in line or '@DATA' in line:
           dataMode = True
       else:
-        line = line.strip()
-        if line != "" :
-          tmpData =  line
-          itemData.append(tmpData)
+        splitted = line.split(',');
+        instID =  splitted[0]
+        instAlg = splitted[2]
+        instTime = splitted[4]
+        print 'alg', instAlg, ' time',instTime
 
-  with open(PROPERTY_FILE, 'w+') as outfile:
-    #write relation
-    propertyArr = {}
-    propertyArr['attributesNumber'] = len(itemAttr) -2
-    propertyArr['instancesNumber'] = len(itemData)
-    json.dump(propertyArr, outfile)
+  # #feature selection
+  # command = 'cp '+FEATURE_FILE+' '+SELECT_FEATURE_FILE
+  # os.system(command)
+
+  # # load generated file contents
+  # itemAttr = []
+  # itemData = []
+  # with open(SELECT_FEATURE_FILE) as ff:
+  #   dataMode = False
+  #   for line in ff:
+  #     if dataMode == False:
+  #       if '@relation' in line or '@RELATION' in line:
+  #         splitted = line.split("'")
+  #       elif '@attribute' in line or '@ATTRIBUTE' in line:
+  #         line = line.strip()
+  #         itemAttr.append(line)
+  #       elif '@data' in line or '@DATA' in line:
+  #         dataMode = True
+  #     else:
+  #       line = line.strip()
+  #       if line != "" :
+  #         tmpData =  line
+  #         itemData.append(tmpData)
+
+  # with open(PROPERTY_FILE, 'w+') as outfile:
+  #   #write relation
+  #   propertyArr = {}
+  #   propertyArr['attributesNumber'] = len(itemAttr) -2
+  #   propertyArr['instancesNumber'] = len(itemData)
+  #   json.dump(propertyArr, outfile)
 
 
 ##################
