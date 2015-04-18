@@ -13,7 +13,7 @@ with open('directories.txt') as ff:
 
     print "Run feature selection, scenario: ", line
 
-    command = 'python fs2.py ' + line
+    command = 'python fs_original.py ' + line
     os.system(command)
 
     os.chdir("sunny")

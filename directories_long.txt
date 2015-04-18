@@ -18,3 +18,44 @@ data/SAT12-RAND //supposed to finish after 1 hour ...
 need to test:
 
 
+
+
+
+full:
+COP-MZN-2013
+SAT11-RAND
+CSP-MZN-2013
+SAT11-HAND
+MAXSAT12-PMS
+ASP-POTASSCO
+PREMARSHALLING-ASTAR-2013
+CSP-2010
+QBF-2011
+SAT12-INDU
+PROTEUS-2014
+SAT12-HAND
+SAT12-ALL
+SAT12-RAND
+
+SAT11-RAND
+SAT11-HAND
+MAXSAT12-PMS
+ASP-POTASSCO
+PREMARSHALLING-ASTAR-2013
+CSP-2010
+QBF-2011
+SAT12-INDU
+PROTEUS-2014
+SAT12-HAND
+SAT12-ALL
+SAT12-RAND
+
+COP-MZN-2013
+java.lang.IllegalArgumentException: A nominal attribute (c_ent_domdeg_cons) cannot have duplicate labels ('(0-0]').
+
+CSP-MZN-2013
+A nominal attribute (c_cv_dom_cons) cannot have duplicate labels ('(0-0]').
+
+PROTEUS-2014
+Unable to determine structure as arff (Reason: java.io.IOException: no valid attribute type or invalid enumeration, read Token[NUMERIC@ATTRIBUTE], line 199).
+Filter options: -S <"Name of search class [search options]">
