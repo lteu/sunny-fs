@@ -1,0 +1,16 @@
+*** CSP-MZN-2013 ***
+No. of instances: 4642.0
+Solvable instances: 0.0
+----------
+SUNNY PAR10: 18000.0
+SUNNY FSI: 0.0
+SUNNY MCP: 0.0
+----------
+SBS PAR10: 18000.0
+SBS FSI: 0.0
+SBS MCP: 0.0
+----------
+VBS PAR10: 18000.0
+VBS FSI: 0.0
+VBS MCP: 0
+==========

@@ -65,6 +65,7 @@ def getBestAlg( directory ):
           if idxScore != -1:
             tmpScore = instScore
 
+        #following data of same inst
         else:
 
           if (instTime < tmpTime) or (instTime == tmpTime and idxScore != -1 and instScore > tmpScore):
@@ -153,8 +154,11 @@ def generateFile( directory,instToAlg):
   #filter file content
   dataMode = False
   newlines = []
+  attrCount = -1
+  attrPosToElim = -1
   with open(FEATURE_FILE) as ff:
       for line in ff:
+
         if dataMode == False:
           if 'instance_id STRING'.upper() not in line.upper() and 'repetition NUMERIC'.upper() not in line.upper() and '@DATA' not in line.upper():
             newlines.append(line)
@@ -168,13 +172,25 @@ def generateFile( directory,instToAlg):
             newlines.append(algsstrToAppend)
             newlines.append('\n@DATA\n')
             dataMode = True
-
+          if '@ATTRIBUTE' in line.upper():
+            attrCount += 1
+            if ('c_ent_domdeg_cons' in line and 'COP-MZN-2013' in directory) or ('c_cv_dom_cons' in line and 'CSP-MZN-2013' in directory):
+              attrPosToElim = attrCount
         else:
           splitted = line.split(",")
           instID = splitted[0]
           alg = instToAlg[instID]
           count = len(splitted)
-          subarr = splitted[2:count]
+          subarr = []
+
+          for i in range(2,count):
+            if attrPosToElim == -1:
+              subarr.append(splitted[i])
+            elif attrPosToElim != -1 and attrPosToElim != i:
+              subarr.append(splitted[i])
+
+
+          #subarr = splitted[2:count]
           tmp = ','.join(subarr)
           tmp = tmp.rstrip()
           tmp = tmp + ','+alg+'\n'
@@ -192,86 +208,92 @@ def generateFile( directory,instToAlg):
   command = 'java -cp weka.jar weka.filters.supervised.attribute.AttributeSelection '+selection_algorithm+'   -i '+ TMPFILE1+ ' -o '+ TMPFILE2
   os.system(command)
 
-  # newlines = []
-  # headStrings = []
-  # repetitions = []
+  newlines = []
+  headStrings = []
+  repetitions = []
 
-  # # load original file head strings
-  # with open(FEATURE_FILE) as ff:
-  #   dataMode = False
-  #   for line in ff:
-  #     if dataMode == False:
-  #       if '@DATA' in line:
-  #         dataMode = True
-  #     else:
-  #       line = line.strip()
-  #       if line != "" :
-  #         splitted = line.split(",")
-  #         headstring = splitted[0]
-  #         repetition = splitted[1]
-  #         headStrings.append(headstring)
-  #         repetitions.append(repetition)
+  # load original file head strings
+  with open(FEATURE_FILE) as ff:
+    dataMode = False
+    for line in ff:
+      if dataMode == False:
+        if '@DATA' in line:
+          dataMode = True
+      else:
+        line = line.strip()
+        if line != "" :
+          splitted = line.split(",")
+          headstring = splitted[0]
+          repetition = splitted[1]
+          headStrings.append(headstring)
+          repetitions.append(repetition)
 
-  # # load generated file contents
-  # itemRelation = []
-  # itemAttr = []
-  # itemData = []
-  # with open(TMPFILE2) as ff:
-  #   dataCounter = 0
-  #   dataMode = False
-  #   for line in ff:
-  #     if dataMode == False:
-  #       if '@relation' in line:
-  #         splitted = line.split("'")
-  #         itemRelation.append(splitted[1])
-  #       elif '@attribute' in line:
-  #         line = line.strip()
-  #         splitted = line.split(" ")
-  #         tmpAttr = splitted[1] + " " + splitted[2].upper()
-  #         itemAttr.append(tmpAttr)
-  #       elif '@data' in line:
-  #         dataMode = True
-  #     else:
-  #       line = line.strip()
-  #       if line != "" :
-  #         tmpData =  headStrings[dataCounter]+","+repetitions[dataCounter]+","+line
-  #         dataCounter += 1
-  #         itemData.append(tmpData)
+  # load generated file contents
+  itemRelation = []
+  itemAttr = []
+  itemData = []
+  with open(TMPFILE2) as ff:
+    dataCounter = 0
+    dataMode = False
+    for line in ff:
+      if dataMode == False:
+        if '@relation' in line:
+          splitted = line.split("'")
+          itemRelation.append(splitted[1])
+        elif '@attribute' in line:
+          line = line.strip()
+          splitted = line.split(" ")
+          tmpAttr = splitted[1] + " " + splitted[2].upper()
+          itemAttr.append(tmpAttr)
+        elif '@data' in line:
+          dataMode = True
+      else:
+        line = line.strip()
+        if line != "" :
+          tmpData =  headStrings[dataCounter]+","+repetitions[dataCounter]+","+line
+          dataCounter += 1
+          itemData.append(tmpData)
 
-  # #write to final file
-  # with open(SELECT_FEATURE_FILE, 'w+') as outfile:
+  #write to final file
+  with open(SELECT_FEATURE_FILE, 'w+') as outfile:
 
-  #   #write relation
-  #   relation = "@RELATION '" + itemRelation[0] + "'\n\n"
-  #   outfile.write(relation)
+    #write relation
+    relation = "@RELATION '" + itemRelation[0] + "'\n\n"
+    outfile.write(relation)
 
-  #   #write attribute
-  #   attr = "@ATTRIBUTE instance_id STRING\n" + "@ATTRIBUTE repetition NUMERIC\n"
-  #   outfile.write(attr)
-  #   for idx, val in enumerate(itemAttr):
-  #     attr = "@ATTRIBUTE " + val + "\n"
-  #     outfile.write(attr)
+    #write attribute
+    attr = "@ATTRIBUTE instance_id STRING\n" + "@ATTRIBUTE repetition NUMERIC\n"
+    outfile.write(attr)
+    for idx, val in enumerate(itemAttr):
+      attr = "@ATTRIBUTE " + val + "\n"
+      if 'algorithm' not in val.lower():
+        outfile.write(attr)
 
-  #   #write data
-  #   preData = "\n" + "@DATA" + "\n"
-  #   outfile.write(preData)
+    #write data
+    preData = "\n" + "@DATA" + "\n"
+    outfile.write(preData)
 
-  #   for idx, val in enumerate(itemData):
-  #     data = val+"\n"
-  #     outfile.write(data)
+    for idx, val in enumerate(itemData):
+      splitted = val.split(',')
+      count = len(splitted)
+      validValArr = splitted[0:count-1]
+      validVal = ','.join(validValArr)
+      data = validVal+"\n"
+      outfile.write(data)
 
-  # with open(PROPERTY_FILE, 'w+') as outfile:
-  #   #write relation
-  #   propertyArr = {}
-  #   propertyArr['attributesNumber'] = len(itemAttr)
-  #   propertyArr['instancesNumber'] = len(itemData)
-  #   json.dump(propertyArr, outfile)
+  #write property json file
+  with open(PROPERTY_FILE, 'w+') as outfile:
+    #write relation
+    propertyArr = {}
+    propertyArr['attributesNumber'] = len(itemAttr) -1
+    propertyArr['instancesNumber'] = len(itemData)
+    json.dump(propertyArr, outfile)
 
   #remove tmp files
-  # rm = "rm -rf "+TMPFILE1
-  # os.system(rm)
-  # rm = "rm -rf "+TMPFILE2
-  # os.system(rm)
+  rm = "rm -rf "+TMPFILE1
+  os.system(rm)
+  rm = "rm -rf "+TMPFILE2
+  os.system(rm)
 
 ##################
 ## MAIN
