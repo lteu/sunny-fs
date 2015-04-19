@@ -40,6 +40,10 @@ foreach ($array as $key => $tmpScenario) {
     $results = getFsiPar10ForScenarioAndCase("backward",$tmpScenario);
     $dic_fsi_backward[$tmpScenario] = $results[0];
     $dic_par10_backward[$tmpScenario] = $results[1];
+
+    $results = getFsiPar10ForScenarioAndCase("ranker5",$tmpScenario);
+    $dic_fsi_ranker5[$tmpScenario] = $results[0];
+    $dic_par10_ranker5[$tmpScenario] = $results[1];
 }
 
 
@@ -70,10 +74,23 @@ foreach ($dic_par10_original as $key => $value) {
 }
 
 
+//diff par10 ranker5
+$diff_par10_ranker5 = array();
+foreach ($dic_par10_original as $key => $value) {
+    $diff_par10_ranker5[$key] = round($dic_par10_ranker5[$key] - $value,5);
+}
+
+//diff fsi ranker5
+$diff_fsi_ranker5 = array();
+foreach ($dic_par10_original as $key => $value) {
+    $diff_fsi_ranker5[$key] = round($dic_fsi_ranker5[$key] - $value,5);
+}
+
+
 //html
 
 //table heading
-$htmlContent = "<tr> <td><label>Scenario</label></td> <td><label>Sunny</label></td> <td><label>fs-forward</label></td> <td><label>fs-backward</label></td> </tr>";
+$htmlContent = "<tr> <td><label>Scenario</label></td> <td><label>Sunny</label></td> <td><label>fs-forward</label></td> <td><label>fs-backward</label></td> <td><label>ranker5</label></td> </tr>";
 
 //par10
 foreach ($dic_par10_original as $key => $value) {
@@ -83,6 +100,7 @@ foreach ($dic_par10_original as $key => $value) {
      $htmlContent .= "<td>".round($dic_par10_original[$key],5)."</td>";
      $htmlContent .= ($diff_par10_forward[$key] >= 0)? "<td class='green'>".$diff_par10_forward[$key]."</td>" : "<td class='red'>".$diff_par10_forward[$key]."</td>";
      $htmlContent .= ($diff_par10_backward[$key] >= 0)? "<td class='green'>".$diff_par10_backward[$key]."</td>" : "<td class='red'>".$diff_par10_backward[$key]."</td>";
+     $htmlContent .= ($diff_par10_ranker5[$key] >= 0)? "<td class='green'>".$diff_par10_ranker5[$key]."</td>" : "<td class='red'>".$diff_par10_ranker5[$key]."</td>";
      $htmlContent .= "</tr>";
 }
 
