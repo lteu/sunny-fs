@@ -57,7 +57,8 @@ foreach ($dic_par10_original as $key => $value) {
 
 //diff fsi forward
 $diff_fsi_forward = array();
-foreach ($dic_par10_original as $key => $value) {
+foreach ($dic_fsi_original as $key => $value) {
+   // echo $dic_fsi_forward[$key]." ".$value."<br/>";
     $diff_fsi_forward[$key] = round($dic_fsi_forward[$key] - $value,5);
 }
 
@@ -68,8 +69,8 @@ foreach ($dic_par10_original as $key => $value) {
 }
 
 //diff fsi backward
-$diff_fsi_forward = array();
-foreach ($dic_par10_original as $key => $value) {
+$diff_fsi_backward  = array();
+foreach ($dic_fsi_original as $key => $value) {
     $diff_fsi_backward[$key] = round($dic_fsi_backward[$key] - $value,5);
 }
 
@@ -82,26 +83,46 @@ foreach ($dic_par10_original as $key => $value) {
 
 //diff fsi ranker5
 $diff_fsi_ranker5 = array();
-foreach ($dic_par10_original as $key => $value) {
+foreach ($dic_fsi_original as $key => $value) {
     $diff_fsi_ranker5[$key] = round($dic_fsi_ranker5[$key] - $value,5);
 }
 
 
 //html
 
+//par10
+
 //table heading
-$htmlContent = "<tr> <td><label>Scenario</label></td> <td><label>Sunny</label></td> <td><label>fs-forward</label></td> <td><label>fs-backward</label></td> <td><label>ranker5</label></td> </tr>";
+$htmlContentpt = "<tr> <td><label>Scenario</label></td> <td><label>Sunny</label></td> <td><label>fs-forward</label></td> <td><label>fs-backward</label></td> <td><label>ranker5</label></td> </tr>";
 
 //par10
 foreach ($dic_par10_original as $key => $value) {
-     $htmlContent .= "<tr>";
-     $htmlContent .= "<td> <label>".$key."</label> </td>";
+     $htmlContentpt .= "<tr>";
+     $htmlContentpt .= "<td> <label>".$key."</label> </td>";
 
-     $htmlContent .= "<td>".round($dic_par10_original[$key],5)."</td>";
-     $htmlContent .= ($diff_par10_forward[$key] >= 0)? "<td class='green'>".$diff_par10_forward[$key]."</td>" : "<td class='red'>".$diff_par10_forward[$key]."</td>";
-     $htmlContent .= ($diff_par10_backward[$key] >= 0)? "<td class='green'>".$diff_par10_backward[$key]."</td>" : "<td class='red'>".$diff_par10_backward[$key]."</td>";
-     $htmlContent .= ($diff_par10_ranker5[$key] >= 0)? "<td class='green'>".$diff_par10_ranker5[$key]."</td>" : "<td class='red'>".$diff_par10_ranker5[$key]."</td>";
-     $htmlContent .= "</tr>";
+     $htmlContentpt .= "<td>".round($dic_par10_original[$key],5)."</td>";
+     $htmlContentpt .= ($diff_par10_forward[$key] >= 0)? "<td class='green'>".$diff_par10_forward[$key]."</td>" : "<td class='red'>".$diff_par10_forward[$key]."</td>";
+     $htmlContentpt .= ($diff_par10_backward[$key] >= 0)? "<td class='green'>".$diff_par10_backward[$key]."</td>" : "<td class='red'>".$diff_par10_backward[$key]."</td>";
+     $htmlContentpt .= ($diff_par10_ranker5[$key] >= 0)? "<td class='green'>".$diff_par10_ranker5[$key]."</td>" : "<td class='red'>".$diff_par10_ranker5[$key]."</td>";
+     $htmlContentpt .= "</tr>";
+}
+
+
+//fsi
+
+//table heading
+$htmlContentfsi = "<tr> <td><label>Scenario</label></td> <td><label>Sunny</label></td> <td><label>fs-forward</label></td> <td><label>fs-backward</label></td> <td><label>ranker5</label></td> </tr>";
+
+//par10
+foreach ($dic_par10_original as $key => $value) {
+     $htmlContentfsi .= "<tr>";
+     $htmlContentfsi .= "<td> <label>".$key."</label> </td>";
+
+     $htmlContentfsi .= "<td>".round($dic_fsi_original[$key],5)."</td>";
+     $htmlContentfsi .= ($diff_fsi_forward[$key] >= 0)? "<td class='green'>".$diff_fsi_forward[$key]."</td>" : "<td class='red'>".$diff_fsi_forward[$key]."</td>";
+     $htmlContentfsi .= ($diff_fsi_backward[$key] >= 0)? "<td class='green'>".$diff_fsi_backward[$key]."</td>" : "<td class='red'>".$diff_fsi_backward[$key]."</td>";
+     $htmlContentfsi .= ($diff_fsi_ranker5[$key] >= 0)? "<td class='green'>".$diff_fsi_ranker5[$key]."</td>" : "<td class='red'>".$diff_fsi_ranker5[$key]."</td>";
+     $htmlContentfsi .= "</tr>";
 }
 
 // //html head
@@ -165,10 +186,9 @@ function getFsiPar10ForScenarioAndCase($scenario,$case){
         <script type='text/javascript' src='lib/bootstrap.min.js'></script>
 
         <style>
-            img{
-                margin-top: 10px;
-                margin-left: 20px;
-                width: 645px;
+            .content{
+                margin: auto;
+                width: 70%;
             }
             .green{
                  color: green;
@@ -181,11 +201,20 @@ function getFsiPar10ForScenarioAndCase($scenario,$case){
   </head>
 
     <body>
+        <div class='content'>
         <div class="table-responsive">
+            <h2>Par10</h2>
             <table class="table">
 
-             <?php echo $htmlContent;?>
+             <?php echo $htmlContentpt;?>
          </table>
+
+         <h2>FSI</h2>
+         <table class="table">
+
+             <?php echo $htmlContentfsi;?>
+         </table>
+     </div>
     </body>
     
     
