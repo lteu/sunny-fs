@@ -7,8 +7,6 @@ In this project branch, we applicate the feature selection algorithms to a datas
 - Results are generated in data/results/(scenario_name).txt
 
 
-***Par10***
 ![Par10](https://github.com/lteu/sunny-fs/blob/master/overview/PAR10-20.04.2015.png)
 
-***FSI***
 ![FSI](https://github.com/lteu/sunny-fs/blob/master/overview/FSI-20.04.2015.png)
