@@ -129,7 +129,8 @@ def generateFile( directory,instToAlg):
 
   # not working
   # ranker used evaluation methods:ReliefFAttributeEval InfoGainAttributeEval SymmetricalUncertAttributeEval
-  selection_algorithm = ' -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -N 5" '
+  # selection_algorithm = ' -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -N 5" '
+  selection_algorithm = ' -E "weka.attributeSelection.InfoGainAttributeEval" '
 
 
 
