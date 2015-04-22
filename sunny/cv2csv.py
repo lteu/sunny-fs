@@ -16,6 +16,8 @@ def cv2csv(scenario,numberOfAttributes,timeout,reps,folds,rootDir):
   # No. of features.
   FEATURES = numberOfAttributes
 
+  print REPS, ' ', FOLDS,' ',TIMEOUT,' ',FEATURES
+
   for i in range(1, REPS + 1):
     for j in range(1, FOLDS + 1):
       path = rootDir+'/cv/rep_' + str(i) + '_fold_' + str(j) + '/'
