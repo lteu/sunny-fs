@@ -123,15 +123,21 @@ def generateFile( directory,instToAlg):
   #   Can also produce a ranked list of attributes by traversing the space from one side to the other and \
   #   recording the order that attributes are selected."
 
-  #selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval" -S "weka.attributeSelection.GreedyStepwise -N 15 -B" '
+  # selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval" -S "weka.attributeSelection.GreedyStepwise -N 15" '
 
   #================= Ranker ===================
 
-  # not working
+  # working
   # ranker used evaluation methods:ReliefFAttributeEval InfoGainAttributeEval SymmetricalUncertAttributeEval
   # selection_algorithm = ' -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -N 5" '
-  selection_algorithm = ' -E "weka.attributeSelection.InfoGainAttributeEval" '
+  # selection_algorithm = ' -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -N 10" '
+  #selection_algorithm = ' -E "weka.attributeSelection.InfoGainAttributeEval" '
 
+  # all the same results
+  selection_algorithm = ' -E "weka.attributeSelection.SymmetricalUncertAttributeEval"  -S "weka.attributeSelection.Ranker -N 3" '
+  # selection_algorithm = ' -E "weka.attributeSelection.GainRatioAttributeEval"  -S "weka.attributeSelection.Ranker -N 10" '
+  # selection_algorithm = ' -E "weka.attributeSelection.OneRAttributeEval"  -S "weka.attributeSelection.Ranker -N 10" ' 
+  # selection_algorithm = ' -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -N 10" '
 
 
   path = directory
