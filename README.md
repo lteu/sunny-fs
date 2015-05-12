@@ -6,7 +6,14 @@ In this project branch, we applicate the feature selection algorithms to a datas
 - Parallel execution: create run_(scenario_name).py files(follow the example of run_PREMARSHALLING-ASTAR-2013.py) and then call each file from a different machine.
 - Results are generated in data/results/(scenario_name).txt
 
+# General results
 
 ![Par10](https://github.com/lteu/sunny-fs/blob/master/overview/PAR10-20.04.2015.png)
 
 ![FSI](https://github.com/lteu/sunny-fs/blob/master/overview/FSI-20.04.2015.png)
+
+# Ranker FS results
+
+![Par10-ranker](https://github.com/lteu/sunny-fs/blob/master/overview/ranker-par10.png)
+
+![FSI-ranker](https://github.com/lteu/sunny-fs/blob/master/overview/ranker-fsi.png)
