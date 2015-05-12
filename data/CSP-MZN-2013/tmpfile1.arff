@@ -155,7 +155,6 @@
 @ATTRIBUTE dy_fzn_time numeric
 @ATTRIBUTE dy_static_time numeric
 @ATTRIBUTE dy_tot_time numeric
-
 @ATTRIBUTE algorithm {bprolog,fzn2smt,g12cpx,g12fd,g12lazyfd,g12mip,gecode,izplus,minisatid,mistral,ortools,allfair}
 
 @DATA

@@ -181,8 +181,8 @@ def generateFile( directory,instToAlg):
             dataMode = True
           if '@ATTRIBUTE' in line.upper():
             attrCount += 1
-            if ('c_ent_domdeg_cons' in line and 'COP-MZN-2013' in directory) or ('c_cv_dom_cons' in line and 'CSP-MZN-2013' in directory):
-              attrPosToElim = attrCount
+            # if ('c_ent_domdeg_cons' in line and 'COP-MZN-2013' in directory) or ('c_cv_dom_cons' in line and 'CSP-MZN-2013' in directory):
+            #   attrPosToElim = attrCount
         else:
           splitted = line.split(",")
           instID = splitted[0]
@@ -213,6 +213,7 @@ def generateFile( directory,instToAlg):
 
   #feature selection
   command = 'java -cp weka.jar weka.filters.supervised.attribute.AttributeSelection '+selection_algorithm+'   -i '+ TMPFILE1+ ' -o '+ TMPFILE2
+  print command
   os.system(command)
 
   newlines = []
@@ -297,10 +298,10 @@ def generateFile( directory,instToAlg):
     json.dump(propertyArr, outfile)
 
   #remove tmp files
-  rm = "rm -rf "+TMPFILE1
-  os.system(rm)
-  rm = "rm -rf "+TMPFILE2
-  os.system(rm)
+  # rm = "rm -rf "+TMPFILE1
+  # os.system(rm)
+  # rm = "rm -rf "+TMPFILE2
+  # os.system(rm)
 
 ##################
 ## MAIN
