@@ -5,6 +5,15 @@ import csv
 import json
 import sys
 
+def filterE16(arr):
+  for indx, val in enumerate(arr):
+    num = str(val)
+    if num.find("e-16") != -1:
+      num = float(num)
+      num = round(num,15)
+    arr[indx] = str(num)
+
+  return arr
 
 def getBestAlg( directory ):
   "This function reads directory"
@@ -161,8 +170,7 @@ def generateFile( directory,instToAlg):
   #filter file content
   dataMode = False
   newlines = []
-  attrCount = -1
-  attrPosToElim = -1
+  attrCount = 0
   with open(FEATURE_FILE) as ff:
       for line in ff:
 
@@ -181,20 +189,21 @@ def generateFile( directory,instToAlg):
             dataMode = True
           if '@ATTRIBUTE' in line.upper():
             attrCount += 1
-            # if ('c_ent_domdeg_cons' in line and 'COP-MZN-2013' in directory) or ('c_cv_dom_cons' in line and 'CSP-MZN-2013' in directory):
-            #   attrPosToElim = attrCount
         else:
           splitted = line.split(",")
+
           instID = splitted[0]
           alg = instToAlg[instID]
           count = len(splitted)
           subarr = []
 
           for i in range(2,count):
-            if attrPosToElim == -1:
-              subarr.append(splitted[i])
-            elif attrPosToElim != -1 and attrPosToElim != i:
-              subarr.append(splitted[i])
+            num = str(splitted[i])
+            #filter e-016 like elements
+            if num.find("E-0") != -1 or num.find("e-0") != -1 or  num.find("e-1") != -1 or  num.find("e-07") != -1:
+              num = float(num)
+              num = round(num,6)
+            subarr.append(str(num))
 
 
           #subarr = splitted[2:count]
@@ -211,9 +220,12 @@ def generateFile( directory,instToAlg):
       out = val
       outfile.write(out)
 
+
+
+
   #feature selection
   command = 'java -cp weka.jar weka.filters.supervised.attribute.AttributeSelection '+selection_algorithm+'   -i '+ TMPFILE1+ ' -o '+ TMPFILE2
-  print command
+  #print command
   os.system(command)
 
   newlines = []

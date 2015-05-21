@@ -5,7 +5,7 @@
 @ATTRIBUTE algorithm {bprolog, fzn2smt, g12cpx, g12fd, g12lazyfd, g12mip, gecode, izplus, jacop, minisatid, mistral, ortools, allfair}
 
 @DATA
--7.6588041464376033e-16, ortools
--7.1210398688847931e-16, g12fd
-3.9248118643975261e-16, g12cpx
--8.7516799363029918e-16, gecode
+-7.658804146437603316, ortools
+-7.121039868884793116, g12fd
+3.924811864397526116, g12cpx
+-8.751679936302991816, gecode
