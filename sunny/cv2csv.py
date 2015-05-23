@@ -16,8 +16,6 @@ def cv2csv(scenario,numberOfAttributes,timeout,reps,folds,rootDir):
   # No. of features.
   FEATURES = numberOfAttributes
 
-  print REPS, ' ', FOLDS,' ',TIMEOUT,' ',FEATURES
-
   for i in range(1, REPS + 1):
     for j in range(1, FOLDS + 1):
       path = rootDir+'/cv/rep_' + str(i) + '_fold_' + str(j) + '/'
@@ -44,11 +42,21 @@ def cv2csv(scenario,numberOfAttributes,timeout,reps,folds,rootDir):
       for row in reader:
         inst = row[0]
         solver = row[2]
-        info = row[4]
-        if info != 'ok':
-          time = TIMEOUT
+
+        # here we have a incongruency ... 
+        if SCENARIO == "CSP-MZN-2013" or SCENARIO == "COP-MZN-2013":
+          info = row[5]
+          if info != 'ok':
+            time = TIMEOUT
+          else:
+            time = float(row[4])
         else:
-          time = float(row[3])
+          info = row[4]
+          if info != 'ok':
+            time = TIMEOUT
+          else:
+            time = float(row[3])
+
         assert time != 'ok' or time < TIMEOUT
         writer.writerow([inst, solver, time, info])
 

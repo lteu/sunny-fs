@@ -33,8 +33,12 @@ def evaluate(scenario,timeout,numberOfInstances,reps,folds,rootDir):
       for row in reader:
         inst = row[0]
         solv = row[2]
-        time = float(row[3])
-        info = row[4]
+        if SCENARIO == "CSP-MZN-2013" or SCENARIO == "COP-MZN-2013":
+          time = float(row[4])
+          info = row[5]
+        else:
+          time = float(row[3])
+          info = row[4]
         if inst not in runtimes.keys():
           runtimes[inst] = {}
         runtimes[inst][solv] = [time, info]

@@ -51,7 +51,10 @@ for i in range(1, REPS + 1):
       solv = row[1]
       time = float(row[2])
       info = row[3]
-      assert info != 'ok' or time < TIMEOUT    
+      if SCENARIO == "COP-MZN-2013":
+        assert info != 'other' or time == TIMEOUT
+      else:
+        assert info != 'ok' or time < TIMEOUT    
       if inst not in kb.keys():
         kb[inst] = {}
       kb[inst][solv] = {'info': info, 'time': time}
