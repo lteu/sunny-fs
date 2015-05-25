@@ -8,7 +8,7 @@
 *
 */
 
-$fss = array("original","ranker3","ranker5","ranker7","ranker9","ranker11","ranker13","ranker15","ranker17");
+$fss = array("original","ranker3","ranker5","ranker7","ranker9","ranker11","ranker13","ranker15","ranker17","ranker19");
 $instFilePath = "inst.txt";
 
 $content = "";
@@ -30,6 +30,7 @@ $tmpScenario = $array[0];
 foreach ($array as $key => $tmpScenario) {
     foreach ($fss as $keyargs => $fs) {
         $results = getFsiPar10ForScenarioAndCase($fs,$tmpScenario);
+       // echo "$tmpScenario $fs ".$results[0]." <br/>";
         $dic_par10[$tmpScenario][$fs] = $results[0];
         $dic_fsi[$tmpScenario][$fs] = $results[1];
     }
@@ -41,10 +42,21 @@ foreach ($array as $key => $tmpScenario) {
 foreach ($array as $key => $tmpScenario) {
     $value_par10 = $dic_par10[$tmpScenario]["original"];
     $value_fsi = $dic_fsi[$tmpScenario]["original"];
+    
+
+
     foreach ($fss as $keyargs => $fs) {
         if ($fs != "original") {
-            $diff_par10[$tmpScenario][$fs] =  round($dic_par10[$tmpScenario][$fs] - $value_par10,5);
-            $diff_fsi[$tmpScenario][$fs] = round($dic_fsi[$tmpScenario][$fs]  - $value_fsi,5);
+            //echo "dic_par10[$tmpScenario] [$fs] fsi".$dic_fsi[$tmpScenario][$fs]." par10".$dic_par10[$tmpScenario][$fs]." <br/>";
+            if ($dic_par10[$tmpScenario][$fs] == "-") {
+                 //echo "- <br/>";
+                $diff_par10[$tmpScenario][$fs] =  "-";
+                $diff_fsi[$tmpScenario][$fs] =  "-";
+            }else{
+                // echo "num <br/>";
+                $diff_par10[$tmpScenario][$fs] =  round($dic_par10[$tmpScenario][$fs] - $value_par10,5);
+                $diff_fsi[$tmpScenario][$fs] = round($dic_fsi[$tmpScenario][$fs]  - $value_fsi,5);
+            }
         }
         
     }
@@ -104,10 +116,14 @@ foreach ($array as $key => $scenario) {
 
 function getFsiPar10ForScenarioAndCase($scenario,$case){
     // load original
+
     $originalpath = "data/".$scenario."/".$case.".txt";
     $par10 = array();
     $fsi = array();
 
+    if(!file_exists($originalpath)){
+        return array("-","-");
+    }
     //open file
     $handle = fopen($originalpath, "r");
     if ($handle) {

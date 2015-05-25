@@ -21,7 +21,7 @@ def evaluate(scenario,timeout,numberOfInstances,reps,folds,rootDir,attrnum):
   INSTANCES = numberOfInstances
 
   #result file path, added by Tong
-  result_path = '../data/results/' +scenario+ '.txt'
+  result_path = '../data/results/rankernew'+attrnum+'/' +scenario+ '.txt'
   result_dir_path = '../data/results/rankernew'+attrnum+'/'
 
   runtimes = {}

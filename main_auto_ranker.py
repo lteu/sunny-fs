@@ -36,7 +36,7 @@ for x in lists:
 
             print "Run evaluate"
             if line == "COP-MZN-2013":
-                  command = 'python evaluate_cop_auto.py ' + line  + ' '+ str(x)
+                  command = 'python evaluate_auto_cop.py ' + line  + ' '+ str(x)
                   os.system(command)
             else:
                   command = 'python evaluate_auto.py ' + line  + ' '+ str(x)
