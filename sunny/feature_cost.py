@@ -22,10 +22,8 @@ def readSelectedFeatures(scenario):
 	return arr
 
 
-def loadFeatureSteps(scenario):
+def loadFeatureSteps(desc_features):
 	arr = {}
-	root = "../data/"+scenario+ "/"
-	desc_features = root + "description.txt"
 	with open(desc_features) as ff:
 		for line in ff:
 			if 'feature_step ' in line.lower():
@@ -55,7 +53,7 @@ def getInvolvedSteps(feature_steps,selected_features):
 	return result
 
 
-def createSelectedFeatureCostFile(root,selected_steps):
+def createSelectedFeatureCostFile(feature_costs,selected_steps):
 	feature_positions = []
 	# out = []
 	out = ""
@@ -66,7 +64,6 @@ def createSelectedFeatureCostFile(root,selected_steps):
     # idxScore = -1
     # isFair = True
 
-	feature_costs = root + "/feature_costs.arff"
 	with open(feature_costs) as ff:
 		for line in ff:
 			#line = line.rstrip()
@@ -108,29 +105,28 @@ scenario = sys.argv[1]
 root = "../data/"+scenario
 path_feature_cost = root + '/feature_costs.arff'
 path_selected_feature_cost = root + '/selected_feature_costs.arff'
-path_out_feature_cost = root + '/select_feature_costs.arff'
 desc_features = root + "/description.txt"
 
 if not os.path.exists(path_feature_cost):
-	print "Feature cost ZERO for '" + path_feature_cost + "'"
+	print "No feature cost file '" + path_feature_cost + "'"
 elif not os.path.exists(desc_features):
 	command = 'cp ' + path_feature_cost + ' '+ path_selected_feature_cost
 	os.system(command)
-	print "Feature cost description not found for '" + path_feature_cost + "' so feature_cost copied ..."
+	print "no feature cost description '" + path_feature_cost
 else:
-	feature_steps = loadFeatureSteps(scenario)
+	feature_steps = loadFeatureSteps(desc_features)
 	# print 'steps: ', feature_steps
 	selected_features = readSelectedFeatures(scenario)
 	# print 'features: ', selected_features
 	selected_steps = getInvolvedSteps(feature_steps,selected_features)
 	selected_steps = list(set(selected_steps))
 	# print selected_steps
-	out = createSelectedFeatureCostFile(root,selected_steps)
+	out = createSelectedFeatureCostFile(path_feature_cost,selected_steps)
 
-	print 'step: ',selected_steps
+	#print 'step: ',selected_steps
 	# print 'out ', out
 
-	with open(path_out_feature_cost, 'w+') as outfile:
+	with open(path_selected_feature_cost, 'w+') as outfile:
 		outfile.write(out)
 	print "Feature cost filtered for ", scenario ,' ...'
 

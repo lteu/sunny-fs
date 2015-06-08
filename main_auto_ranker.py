@@ -62,6 +62,6 @@ for x in lists:
 
                   os.chdir("../")
             
-            outfile = 'time_ranker_'+str(x)+".txt"
+            outfile = 'time/time_ranker_'+str(x)+".txt"
             with open(outfile, 'a+') as file:
                   file.write(text)

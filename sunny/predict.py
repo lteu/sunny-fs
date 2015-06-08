@@ -188,7 +188,7 @@ K = int(round(sqrt(INSTANCES * (FOLDS - 1) / FOLDS)))
 
 #added by Tong
 FEAT_COST = -1
-path_feature_cost = rootDir + '/select_feature_costs.arff'
+path_feature_cost = rootDir + '/selected_feature_costs.arff'
 #added by Tong, check feature cost file
 if not os.path.exists(path_feature_cost):
   FEAT_COST = 0
