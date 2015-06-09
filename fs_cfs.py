@@ -11,11 +11,10 @@ def generateFile( directory ):
 
   #================= Evaluation Methods ===================
   # cannot call: AttributeSetEvaluator, CorrelationAttributeEval, HoldOutSubsetEvaluator,  UnsupervisedAttributeEvaluator,  UnsupervisedSubsetEvaluator
-  # Need special class: GainRatioAttributeEval, InfoGainAttributeEval, OneRAttributeEval, SymmetricalUncertAttributeEval
-  # ReliefFAttributeEval only change the order of the attributes
+  # Need special class: GainRatioAttributeEval, InfoGainAttributeEval, OneRAttributeEval, SymmetricalUncertAttributeEval, ReliefFAttributeEval
   # Returns only one feature, WrapperSubsetEval
 
-  #================= BestFit ===================
+  #================= BestFirst ===================
 
   # Searches the space of attribute subsets by greedy hillclimbing augmented 
   # with a backtracking facility. Setting the number of consecutive non-improving nodes 
@@ -24,24 +23,26 @@ def generateFile( directory ):
   # or start at any point and search in both directions (by considering all possible single attribute 
   # additions and deletions at a given point).
 
-  # Forward search
-  selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval -M" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
+  # Forward search - ok
+  # selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval -M" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
+
+  # backward search - ok
+  # selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval -M" -S "weka.attributeSelection.BestFirst -D 0 -N 5" '
   
-  # Returns only one feature
+  # Returns only one feature - ok
   # selection_algorithm = ' -E "weka.attributeSelection.WrapperSubsetEval" -S "weka.attributeSelection.BestFirst -D 1 -S 5" '
 
   # not working
   
+  # NOT FOUND - no
   # selection_algorithm = ' -E "weka.attributeSelection.AttributeSetEvaluator" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
-  # selection_algorithm = ' -E "weka.attributeSelection.ReliefFAttributeEval"  '
+  # selection_algorithm = ' -E "weka.attributeSelection.CorrelationAttributeEval" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
+  # selection_algorithm = ' -E "weka.attributeSelection.HoldOutSubsetEvaluator" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
+  # selection_algorithm = ' -E "weka.attributeSelection.UnsupervisedAttributeEvaluator" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
+  selection_algorithm = ' -E "weka.attributeSelection.UnsupervisedSubsetEvaluator" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
+
   
-  #backward search
-  #selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval -M" -S "weka.attributeSelection.BestFirst -D 0 -N 5" '
-
-
-  #
-  #selection_algorithm = ' -E "weka.attributeSelection.AttributeSetEvaluator" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
-
+  
   #================= GreedyStepwise ===================
 
   # "Performs a greedy forward or backward search through the space of attribute subsets. \
@@ -54,11 +55,7 @@ def generateFile( directory ):
 
   #================= Ranker ===================
 
-  # not working
-  # ranker used evaluation methods:ReliefFAttributeEval InfoGainAttributeEval SymmetricalUncertAttributeEval
-  # selection_algorithm = ' -E "weka.attributeSelection.InfoGainAttributeEval"'
-
-
+  # see file fs_ranker.py
 
   path = directory
   TMPFILE1 = path+'/tmpfile1.arff'

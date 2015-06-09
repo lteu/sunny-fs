@@ -87,66 +87,23 @@ def getBestAlg( directory ):
 
   return instToAlg
 
-def generateFile( directory,instToAlg):
+def generateFile( directory,instToAlg,attrnum):
 
   "This function reads directory"
 
-  #================= Evaluation Methods ===================
-  # cannot call: AttributeSetEvaluator, CorrelationAttributeEval, HoldOutSubsetEvaluator,  UnsupervisedAttributeEvaluator,  UnsupervisedSubsetEvaluator
-  # Need special class: GainRatioAttributeEval, InfoGainAttributeEval, OneRAttributeEval, SymmetricalUncertAttributeEval
-  # ReliefFAttributeEval only change the order of the attributes
-  # Returns only one feature, WrapperSubsetEval
-
-  #================= BestFit ===================
-
-  # Searches the space of attribute subsets by greedy hillclimbing augmented 
-  # with a backtracking facility. Setting the number of consecutive non-improving nodes 
-  # allowed controls the level of backtracking done. Best first may start with the empty set of 
-  # attributes and search forward, or start with the full set of attributes and search backward, 
-  # or start at any point and search in both directions (by considering all possible single attribute 
-  # additions and deletions at a given point).
-
-  # Forward search
-  #selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval -M" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
-  
-  # Returns only one feature
-  # selection_algorithm = ' -E "weka.attributeSelection.WrapperSubsetEval" -S "weka.attributeSelection.BestFirst -D 1 -S 5" '
-
-  # not working
-  
-  # selection_algorithm = ' -E "weka.attributeSelection.AttributeSetEvaluator" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
-  # selection_algorithm = ' -E "weka.attributeSelection.ReliefFAttributeEval"  '
-  
-  #backward search
-  #selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval -M" -S "weka.attributeSelection.BestFirst -D 0 -N 5" '
-
-
-  #
-  #selection_algorithm = ' -E "weka.attributeSelection.AttributeSetEvaluator" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
-
-  #================= GreedyStepwise ===================
-
-  # "Performs a greedy forward or backward search through the space of attribute subsets. \
-  #   May start with no/all attributes or from an arbitrary point in the space. \
-  #   Stops when the addition/deletion of any remaining attributes results in a decrease in evaluation. \
-  #   Can also produce a ranked list of attributes by traversing the space from one side to the other and \
-  #   recording the order that attributes are selected."
-
-  # selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval" -S "weka.attributeSelection.GreedyStepwise -N 15" '
 
   #================= Ranker ===================
 
   # working
   # ranker used evaluation methods:ReliefFAttributeEval InfoGainAttributeEval SymmetricalUncertAttributeEval
-  # selection_algorithm = ' -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -N 5" '
-  # selection_algorithm = ' -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -N 10" '
-  #selection_algorithm = ' -E "weka.attributeSelection.InfoGainAttributeEval" '
+
 
   # all the same results
-  selection_algorithm = ' -E "weka.attributeSelection.SymmetricalUncertAttributeEval"  -S "weka.attributeSelection.Ranker -N 3" '
+  selection_algorithm = ' -E "weka.attributeSelection.SymmetricalUncertAttributeEval"  -S "weka.attributeSelection.Ranker -N '+attrnum+'" '
   # selection_algorithm = ' -E "weka.attributeSelection.GainRatioAttributeEval"  -S "weka.attributeSelection.Ranker -N 10" '
   # selection_algorithm = ' -E "weka.attributeSelection.OneRAttributeEval"  -S "weka.attributeSelection.Ranker -N 10" ' 
   # selection_algorithm = ' -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -N 10" '
+  # selection_algorithm = ' -E "weka.attributeSelection.ReliefFAttributeEval" -S "weka.attributeSelection.Ranker -N 10" '
 
 
   path = directory
@@ -321,9 +278,10 @@ def generateFile( directory,instToAlg):
 
 
 dataDir = 'data/' + sys.argv[1]
+attrnum = sys.argv[2]
 dic = getBestAlg(dataDir)
 
 # for (key,val) in dic.iteritems():
 #   print 'hey:', key,' valore',val
 
-generateFile(dataDir,dic)
+generateFile(dataDir,dic,attrnum)
