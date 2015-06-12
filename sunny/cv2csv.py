@@ -31,6 +31,7 @@ def cv2csv(scenario,numberOfAttributes,timeout,reps,folds,rootDir):
           if f == '?':
             f = DEF_FEAT_VALUE
           feats.append(float(f))
+          # print str(len(feats)),' vs ',FEATURES
         assert len(feats) == FEATURES
         writer.writerow([row[0], feats])
       
