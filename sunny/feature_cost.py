@@ -108,11 +108,11 @@ path_selected_feature_cost = root + '/selected_feature_costs.arff'
 desc_features = root + "/description.txt"
 
 if not os.path.exists(path_feature_cost):
-	print "No feature cost file '" + path_feature_cost + "'"
+	print "No feature cost file  - ok"
 elif not os.path.exists(desc_features):
 	command = 'cp ' + path_feature_cost + ' '+ path_selected_feature_cost
 	os.system(command)
-	print "no feature cost description '" + path_feature_cost
+	print "NO feature cost description  - ok"
 else:
 	feature_steps = loadFeatureSteps(desc_features)
 	# print 'steps: ', feature_steps
@@ -128,5 +128,5 @@ else:
 
 	with open(path_selected_feature_cost, 'w+') as outfile:
 		outfile.write(out)
-	print "Feature cost filtered for ", scenario ,' ...'
+	print "Feature cost filtered  - ok "
 

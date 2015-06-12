@@ -29,7 +29,7 @@ def loadData():
           if '@ATTRIBUTE instance_id STRING'.lower() not in line.lower() and '@ATTRIBUTE repetition NUMERIC'.lower() not in line.lower():
             line = line.strip()
             attributes[line] = i
-            i = i + 1
+          i = i + 1
         elif '@data' in line.lower():
           dataMode = True
       else:
@@ -92,6 +92,8 @@ def oneStepWrappe(selAttrs):
         bestFsi = fsi
         bestPar10 = par10
         bestSelAttrs = list(tempSelAttrs)
+
+  return bestFsi,bestPar10,bestSelAttrs
 
 # sunny execution
 def runSunny(attrnum):
@@ -321,4 +323,6 @@ scenario = 'PREMARSHALLING-ASTAR-2013'
 title,attributes,data = loadData()
 
 testAttrs = []
-oneStepWrappe(testAttrs)
+bestFsi,bestPar10,bestSelAttrs = oneStepWrappe(testAttrs)
+
+print bestFsi,' ',bestSelAttrs
