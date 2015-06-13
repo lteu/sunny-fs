@@ -320,9 +320,27 @@ def evaluate(scenario,timeout,numberOfInstances,reps,folds,attrnum,sbs):
 
 scenario = 'PREMARSHALLING-ASTAR-2013' 
 
+
 title,attributes,data = loadData()
 
+testFsi = -1
+testPar10 = 9999999999
 testAttrs = []
-bestFsi,bestPar10,bestSelAttrs = oneStepWrappe(testAttrs)
 
-print bestFsi,' ',bestSelAttrs
+output = ""
+
+for x in xrange(1,len(attributes)+1):
+  fsi,par10,tempSelAttrs = oneStepWrappe(testAttrs)
+  if fsi > testFsi or (fsi == testPar10 and bestPar10 < par10):
+    testFsi = fsi
+    testPar10 = par10
+    testAttrs = list(tempSelAttrs)
+    attrStr = ",".join(testAttrs)
+    output = output +scenario+" update\n"+str(testFsi)+"\n"+str(testPar10)+"\n"+attrStr+"\n\n"
+  else:
+    break
+
+
+with open("wrapper.txt", 'w+') as outfile:
+  outfile.write(output)
+
