@@ -48,6 +48,7 @@ def get_neighbours(feat_vector, kb):
         solved[s][1] += float(it['time'])
       else:
         solved[s][1] += TIMEOUT
+
     d = euclidean_distance(feat_vector, map(float, row[1][1 : -1].split(',')))
     distances.append((d, inst))
     infos[inst] = row[2]

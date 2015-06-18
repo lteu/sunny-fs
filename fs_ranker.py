@@ -100,10 +100,10 @@ def generateFile( directory,instToAlg,attrnum):
 
   # all the same results
   selection_algorithm = ' -E "weka.attributeSelection.SymmetricalUncertAttributeEval"  -S "weka.attributeSelection.Ranker -N '+attrnum+'" '
-  # selection_algorithm = ' -E "weka.attributeSelection.GainRatioAttributeEval"  -S "weka.attributeSelection.Ranker -N 10" '
-  # selection_algorithm = ' -E "weka.attributeSelection.OneRAttributeEval"  -S "weka.attributeSelection.Ranker -N 10" ' 
-  # selection_algorithm = ' -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -N 10" '
-  # selection_algorithm = ' -E "weka.attributeSelection.ReliefFAttributeEval" -S "weka.attributeSelection.Ranker -N 10" '
+  # selection_algorithm = ' -E "weka.attributeSelection.GainRatioAttributeEval"  -S "weka.attributeSelection.Ranker -N '+attrnum+'" '
+  # selection_algorithm = ' -E "weka.attributeSelection.OneRAttributeEval"  -S "weka.attributeSelection.Ranker -N '+attrnum+'" '
+  # selection_algorithm = ' -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -N '+attrnum+'" '
+  # selection_algorithm = ' -E "weka.attributeSelection.ReliefFAttributeEval" -S "weka.attributeSelection.Ranker -N '+attrnum+'" '
 
 
   path = directory

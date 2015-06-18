@@ -65,8 +65,17 @@ def oneStepWrappe(selAttrs):
   for (attr,pos) in attributes.iteritems():
     tempSelAttrs = list(selAttrs)
 
+
+
     if attr not in tempSelAttrs:
+
       tempSelAttrs.append(attr)
+
+      # prepare to check 'attr' val duplication
+      checkExistDiff = False
+      checkline_pieces = data[0].split(',')
+      checkAttrPos = attributes[attr]
+      chechVal = checkline_pieces[checkAttrPos]
 
       # GENERATE SELECTED FEATURES VALUES
       # title
@@ -77,16 +86,26 @@ def oneStepWrappe(selAttrs):
       for d in data: #each data line
         ds = d.split(',')
         dLine = ds[0]+","+ds[1] #initials: id, rep
+
+        if chechVal != ds[checkAttrPos]:
+          checkExistDiff = True
+
         for tmpAttr in tempSelAttrs:
           tmpPos = attributes[tmpAttr]
           dLine = dLine +","+ ds[tmpPos]
 
         outtext = outtext + dLine + "\n"
 
+
+      # if all values of the new attr are the same, skip sunny evaluation
+      if not checkExistDiff:
+        continue
+
       # write to file
       with open(SELECT_FEATURE_FILE, 'w+') as outfile:
           outfile.write(outtext)
 
+      # execute sunny
       fsi,par10 = runSunny(len(tempSelAttrs))
       if fsi > bestFsi or (fsi == bestFsi and bestPar10 < par10):
         bestFsi = fsi
@@ -318,7 +337,8 @@ def evaluate(scenario,timeout,numberOfInstances,reps,folds,attrnum,sbs):
 ##################
 
 
-scenario = 'PREMARSHALLING-ASTAR-2013' 
+# scenario = 'PREMARSHALLING-ASTAR-2013' 
+scenario = 'SAT11-HAND' 
 
 
 title,attributes,data = loadData()
@@ -337,10 +357,12 @@ for x in xrange(1,len(attributes)+1):
     testAttrs = list(tempSelAttrs)
     attrStr = ",".join(testAttrs)
     output = output +scenario+" update\n"+str(testFsi)+"\n"+str(testPar10)+"\n"+attrStr+"\n\n"
+    with open("wrapperx.txt", 'a+') as outfile:
+      outfile.write(output)
   else:
     break
 
-
+ 
 with open("wrapper.txt", 'w+') as outfile:
   outfile.write(output)
 

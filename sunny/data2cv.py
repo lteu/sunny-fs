@@ -68,7 +68,9 @@ def data2cv(numberOfInstances,numberOfAlgorithms,reps,folds,rootDir):
       if row and row[0].strip().upper() == '@DATA':
         # Iterates until preamble ends.
         break
+
     for row in reader:
+      #print row
       inst = row[0]
       i = int(row[1])
       for j in range(1, FOLDS + 1):

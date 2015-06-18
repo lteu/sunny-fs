@@ -106,6 +106,8 @@ for i in range(1, REPS + 1):
         new_feat_vector.append(new_val)
       assert nan not in new_feat_vector
       kb_row = [inst, new_feat_vector, kb[inst]]
+      # kb_row = [inst, 0, kb[inst]]
+      # print kb_row
       writer.writerow(kb_row)
   
     lim_file = kb_path + '/' + SCENARIO + '_lims'
