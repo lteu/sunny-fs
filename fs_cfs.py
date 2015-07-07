@@ -24,7 +24,7 @@ def generateFile( directory ):
   # additions and deletions at a given point).
 
   # Forward search - ok
-  # selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval -M" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
+  selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval -M" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
 
   # backward search - ok
   # selection_algorithm = ' -E "weka.attributeSelection.CfsSubsetEval -M" -S "weka.attributeSelection.BestFirst -D 0 -N 5" '
@@ -36,7 +36,7 @@ def generateFile( directory ):
   
   # NOT FOUND - no
   # selection_algorithm = ' -E "weka.attributeSelection.AttributeSetEvaluator" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
-  selection_algorithm = ' -E "weka.attributeSelection.CorrelationAttributeEval" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
+  # selection_algorithm = ' -E "weka.attributeSelection.CorrelationAttributeEval" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
   # selection_algorithm = ' -E "weka.attributeSelection.HoldOutSubsetEvaluator" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
   # selection_algorithm = ' -E "weka.attributeSelection.UnsupervisedAttributeEvaluator" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
   # selection_algorithm = ' -E "weka.attributeSelection.UnsupervisedSubsetEvaluator" -S "weka.attributeSelection.BestFirst -D 1 -N 5" '
