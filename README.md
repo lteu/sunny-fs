@@ -1,5 +1,19 @@
 # sunny-fs
-In this project branch, we applicate the feature selection algorithms to a dataset which is then used in the sunny experiment.
+
+Feature selection for SUNNY (closed).
+
+
+This project has generated the results for the work:
+
+
+> Roberto Amadini, Fabio Biselli, Maurizio Gabbrielli, Tong Liu, Jacopo Mauro. Feature Selection for SUNNY: a Study on the Algorithm Selection Library. ICTAI, Nov 2015, Vietri sul Mare, Italy.
+
+
+This is the first time that we executed a systematic study for the impact of FS techniques on SUNNY performance.
+
+
+Technical notes:
+
 
 - To change feature selection algorithm, please change the value of 'selection_algorithm' in the fs.py file.
 - Sequential execution: Add scenario names to directories.txt file and run main.py, you will test all selected scenarios in one time.
